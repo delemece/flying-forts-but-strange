@@ -2,7 +2,7 @@
 --  make sure this exceedes the age of all effects
 LifeSpan = 9.0
 
-Sprites =
+--[[Sprites =
 {
 	{
 		Name = "cannon_fire",
@@ -32,7 +32,7 @@ Sprites =
 			},
 		},
 	},
-}
+}]]
 
 Effects =
 {

@@ -1,30 +1,32 @@
 
 
---[[table.insert(Projectiles,
+table.insert(Projectiles,
 {
-		SaveName = "dl100",
+		SaveName = "dl150",
 
 		ProjectileType = "mortar",
 		ProjectileSprite = "weapons/media/bullet",
 		DrawBlurredProjectile = true,
 		ProjectileMass = 20.0,
-		ProjectileDrag = 9.5,
+		ProjectileDrag = 0,
 		ProjectileIncendiary = false,
 		DeflectedByShields = false,
 		ExplodeOnTouch = false,
-		ProjectileThickness = 8.0,
+		ProjectileThickness = 6.0,
 		ProjectileShootDownRadius = 60,
-		Impact = 200000,
+		Impact = 100000,
 		DisableShields = false,
 		BeamTileRate = 0.02,
 		BeamScrollRate = 0.0,
-		ProjectileDamage = 340.0,
+		ProjectileDamage = 320.0,
 		ProjectileSplashDamage = 20,
 		ProjectileSplashDamageMaxRadius = 200.0,
 		SpeedIndicatorFactor = 0.05,
-		MinAge = 4,
-		MaxAge = 5,
 		TrailEffect = "/effects/cannon_trail.lua",
+
+		MinAge = 5,
+		MaxAge = 6,
+
 
 	Effects =
 		{
@@ -51,7 +53,7 @@
 			["door"] = { Reflect = 0, Penetrate = 4000 },
 		},
 })
-]]
+
 table.insert(Projectiles,
 {
 		SaveName = "dl500",
@@ -66,7 +68,7 @@ table.insert(Projectiles,
 		ExplodeOnTouch = false,
 		ProjectileThickness = 12.0,
 		ProjectileShootDownRadius = 60,
-		Impact = 100000,
+		Impact = 200000,
 		BeamTileRate = 0.02,
 		BeamScrollRate = 0.0,
 		ProjectileDamage = 850.0,
@@ -122,7 +124,7 @@ table.insert(Projectiles,
 		ProjectileIncendiary = false,
 		DeflectedByShields = false,
 		ExplodeOnTouch = true,
-		ProjectileThickness = 12.0,
+		ProjectileThickness = 14.0,
 		ProjectileShootDownRadius = 150,
 		ProjectileShootDownRadiusBeamWidth = 15,
 		Impact = 100000,

@@ -25,8 +25,6 @@ table.insert(Weapons, IndexOfWeapon("machinegun"),
 		SelectEffect = "ui/hud/weapons/ui_weapons",
 })
 
-table.insert(Sprites, DetailSprite("hud-detail-cannon", "dl-520", path))
-table.insert(Sprites, ButtonSprite("hud-group-cannon", "groups/Group-cannon", GroupButtonSpriteBottom, GroupButtonSpriteBottom, nil, nil, path))
 table.insert(Sprites, ButtonSprite("hud-dl-520-icon", "HUD/HUD-dl-520", nil, ButtonSpriteBottom, nil, nil, path))
 
 table.insert(Weapons, IndexOfWeapon("cannon"),
@@ -105,4 +103,58 @@ table.insert(Weapons, IndexOfWeapon("cannon"),
 	{
 		"dl_520",
 	},
+})
+
+table.insert(Sprites, ButtonSprite("hud-dl-150-icon", "HUD/HUD-dl-150", nil, ButtonSpriteBottom, nil, nil, path))
+table.insert(Weapons, IndexOfWeapon("cannon"),
+{
+		Enabled = true,
+		SaveName = "dl_150",
+		FileName = path .. "/weapons/dl-150/dl-150.lua",
+		Icon = "hud-dl-150-icon",
+		GroupButton = "hud-group-cannon",
+		Detail = "hud-detail-cannon",
+		BuildTimeIntermediate = 10.0,
+		BuildTimeComplete = 25.0,
+		ScrapPeriod = 3,
+		MetalCost = 700,
+		EnergyCost = 4000,
+		MetalRepairCost = 15,
+		EnergyRepairCost = 250,
+		MetalReclaimMin = 0.25,
+		MetalReclaimMax = 0.5,
+		EnergyReclaimMin = 0.1,
+		EnergyReclaimMax = 0.5,
+		MaxSpotterAssistance = 0, -- machinegun doesn't benefit from spotters
+		MaxUpAngle = 30,
+		BuildOnGroundOnly = false,
+		SelectEffect = "ui/hud/weapons/ui_weapons",
+		Prerequisite = "munitions",
+})
+
+table.insert(Sprites, ButtonSprite("hud-dl-150F-icon", "HUD/HUD-dl-150F", nil, ButtonSpriteBottom, nil, nil, path))
+table.insert(Weapons, IndexOfWeapon("cannon"),
+{
+		Enabled = true,
+		SaveName = "dl_150F",
+		FileName = path .. "/weapons/dl-150/dl-150F.lua",
+		Icon = "hud-dl-150F-icon",
+		GroupButton = "hud-group-cannon",
+		Detail = "hud-detail-cannon",
+		BuildTimeIntermediate = 10.0,
+		BuildTimeComplete = 25.0,
+		ScrapPeriod = 3,
+		MetalCost = 700,
+		EnergyCost = 4000,
+		MetalRepairCost = 15,
+		EnergyRepairCost = 250,
+		MetalReclaimMin = 0.25,
+		MetalReclaimMax = 0.5,
+		EnergyReclaimMin = 0.1,
+		EnergyReclaimMax = 0.5,
+		MaxSpotterAssistance = 0, -- machinegun doesn't benefit from spotters
+		MaxUpAngle = 30,
+		BuildOnGroundOnly = false,
+		SelectEffect = "ui/hud/weapons/ui_weapons",
+		Prerequisite = "munitions",
 })
