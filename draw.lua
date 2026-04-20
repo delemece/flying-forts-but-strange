@@ -4,7 +4,7 @@ CurrentStruct = -1
 MovementKeys = {["up"] = Vec3(0, -1, 0), ["right"] = Vec3(1, 0, 0), ["left"] = Vec3(-1, 0, 0), ["down"] = Vec3(0, 1, 0)}
 exists = false
 local kPressed = 0
-local savedforce = Vec3(0, 0, 0)
+local SavedForce = Vec3(0, 0, 0)
 
 function DrawChas()
 	for i, v in pairs(data.chasics) do
@@ -67,7 +67,7 @@ function OnKey(key, down)
 			kPressed = kPressed - 1
 		end
 	end
-	if (GetDeviceType(GetLocalSelectedDeviceId()) == ContName) and not (key == "mouse right") and not ShwUI and ((GetLocalTeamId() % 10) == GetDeviceTeamId(GetLocalSelectedDeviceId())) then
+	if (IsDesiredDevice(ContName, GetLocalSelectedDeviceId())) and not (key == "mouse right") and not ShwUI and ((GetLocalTeamId() % 10) == GetDeviceTeamId(GetLocalSelectedDeviceId())) then
 
 		ShwUI = true
 		local location = ControlPlace
@@ -85,13 +85,13 @@ function OnKey(key, down)
 		AddButtonControl("BUTTON1", "BUTTON2", path .. "/sprites/" .. FORCETEXTNAME, ANCHOR_CENTER_CENTER, DirectionSize, location, "Normal")		
 		
 	elseif key == "mouse left" and down then
-		if GetDeviceType(GetLocalSelectedDeviceId()) == ContName then
+		if IsDesiredDevice(ContName, GetLocalSelectedDeviceId()) then
 			changeUi = true
 		end
 		if data.Structures.Forces[CurrentStruct] ~= nil then
-			savedforce = Vec3(data.Structures.Forces[CurrentStruct].x, data.Structures.Forces[CurrentStruct].y, 0)
+			SavedForce = Vec3(data.Structures.Forces[CurrentStruct].x, data.Structures.Forces[CurrentStruct].y, 0)
 		end
-	elseif not (GetDeviceType(GetLocalSelectedDeviceId(v)) == ContName) or key == "mouse right" then
+	elseif not (IsDesiredDevice(ContName, GetLocalSelectedDeviceId())) or key == "mouse right" then
 		DeleteControl("HUD", "BUTTON1") 
 		ShwUI = false
 		changeUi = false
@@ -100,7 +100,7 @@ function OnKey(key, down)
 		changeUi = false
 		
 		if data.Structures.Forces[CurrentStruct] ~= nil then
-			savedforce = Vec3(data.Structures.Forces[CurrentStruct].x, data.Structures.Forces[CurrentStruct].y, 0)
+			SavedForce = Vec3(data.Structures.Forces[CurrentStruct].x, data.Structures.Forces[CurrentStruct].y, 0)
 		end	
 	end
 	
@@ -109,7 +109,7 @@ function OnKey(key, down)
 	end
 	
 	if kPressed == 0 and MovementKeys[key] ~= nil and not down then
-		SendScriptEvent("SetForce", tostring(savedforce.x) .. " , " .. tostring(savedforce.y) .. " , " .. tostring(CurrentStruct), "", true)
+		SendScriptEvent("SetForce", tostring(SavedForce.x) .. " , " .. tostring(SavedForce.y) .. " , " .. tostring(CurrentStruct), "", true)
 		Hmove = Vec3(0, 0, 0)
 	end
 	--Log("Current direction: " .. tostring(Structures.Forces[CurrentStruct].x) .. " " .. tostring(Structures.Forces[CurrentStruct].y))

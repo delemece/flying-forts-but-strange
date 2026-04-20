@@ -138,6 +138,7 @@ function Update(frame)
 		UpdateTanks()
 		MoveStruct()
 		BounceThingy()
+		LogWatch()
 	end
 end
 
