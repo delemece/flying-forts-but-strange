@@ -60,11 +60,11 @@ function clamp(ang)
 	return ang
 end
 
-function RotateVec(Vec3 v, angle)
+function RotateVec(v, angle)
 	return Vec3(v.x * math.cos(ang) - v.y * math.sin(angle), v.x * math.sin(ang) - v.y * math.cos(angle), 0)
 end
 function LogWatch()
-	for T, _ in pairs(watchlist) do
+	for T, G in pairs(watchlist) do
 		if type(T) == type({}) then 
 			for i, v in pairs(T) do 
 				if type(i) == type({}) then debugTable(i)

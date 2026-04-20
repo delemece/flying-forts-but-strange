@@ -1,6 +1,6 @@
 dofile("scripts/forts.lua")
-dofile(path .. "/draw.lua")
 dofile(path .. "/magic.lua")
+dofile(path .. "/draw.lua")
 dofile(path .. "/thrusters.lua")
 
 data.Structures = {Nodes = {--[[deviceId, Nodes]]}, Affected = {--[[devIdcont, True/nil]]}, Forces = {--[[devIdcont, vec3]]}}
