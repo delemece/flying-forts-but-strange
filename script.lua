@@ -101,10 +101,15 @@ end
 --Movement--
 
 function SetForce(x, y, deviceId)
+	local step = 0.01
 	local str = GetDeviceStructureId(deviceId)
-	for i, v in pairs(data.Structures.Affected) do 
-		if GetDeviceStructureId(i) == str then
-			data.Structures.Forces[i] = Vec3(tonumber(x), tonumber(y), 0)
+	for j = 0, 1, step do
+		for i, v in pairs(data.Structures.Affected) do 
+			if GetDeviceStructureId(i) == str then
+				
+				local tmp = Vec3(-data.Structures.Forces[i].x + tonumber(x), -data.Structures.Forces[i].y + tonumber(y), 0)
+				data.Structures.Forces[i] = Vec3(data.Structures.Forces[i].x + tmp.x * j, data.Structures.Forces[i].y + tmp.y * j, 0)
+			end
 		end
 	end
 end
