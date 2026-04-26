@@ -7,7 +7,7 @@ table.insert(Devices, IndexOfDevice("sandbags") + 1,
 	Detail = "hud-detail-repairstation",
 	BuildTimeComplete = 2,
 	ScrapPeriod = 1,
-	MetalCost = 500,
+	MetalCost = 300,
 	EnergyCost = 2000,
 	MetalRepairCost = 100,
 	EnergyRepairCost = 750,
@@ -24,7 +24,7 @@ table.insert(Devices, IndexOfDevice("sandbags") + 2,
 	Detail = "hud-detail-repairstation",
 	BuildTimeComplete = 2,
 	ScrapPeriod = 1,
-	MetalCost = 700,
+	MetalCost = 500,
 	EnergyCost = 3000,
 	MetalRepairCost = 100,
 	EnergyRepairCost = 750,
@@ -32,8 +32,24 @@ table.insert(Devices, IndexOfDevice("sandbags") + 2,
 	BuildOnGroundOnly = false,
 })
 
-table.insert(Sprites, ButtonSprite("hud-tank_S-icon", "HUD/HUD-tank_S", nil, ButtonSpriteBottom, nil, nil, path))
+table.insert(Sprites, ButtonSprite("hud-mth-icon", "HUD/HUD-mth", nil, ButtonSpriteBottom, nil, nil, path))
 table.insert(Devices, IndexOfDevice("sandbags") + 3,
+{
+	SaveName = "marchThruster",
+	FileName = path .. "/devices/marchThruster.lua",
+	Icon = "hud-mth-icon",
+	Detail = "hud-detail-repairstation",
+	BuildTimeComplete = 2,
+	ScrapPeriod = 1,
+	MetalCost = 800,
+	EnergyCost = 1500,
+	MetalRepairCost = 100,
+	EnergyRepairCost = 750,
+	MaxUpAngle = 60,
+	BuildOnGroundOnly = false,
+})
+table.insert(Sprites, ButtonSprite("hud-tank_S-icon", "HUD/HUD-tank_S", nil, ButtonSpriteBottom, nil, nil, path))
+table.insert(Devices, IndexOfDevice("sandbags") + 4,
 {
 	SaveName = "tank_S",
 	FileName = path .. "/devices/tank_S.lua",
@@ -50,7 +66,7 @@ table.insert(Devices, IndexOfDevice("sandbags") + 3,
 })
 
 table.insert(Sprites, ButtonSprite("hud-tank_B-icon", "HUD/HUD-tank_B", nil, ButtonSpriteBottom, nil, nil, path))
-table.insert(Devices, IndexOfDevice("sandbags") + 4,
+table.insert(Devices, IndexOfDevice("sandbags") + 5,
 {
 	SaveName = "Tank_B",
 	FileName = path .. "/devices/tank_B.lua",

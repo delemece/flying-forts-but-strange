@@ -1,7 +1,7 @@
 ThType = {--[[["Name"] = {Thrust = {x, y}, Arc = C3 deg, Angle = C2 deg (0 <= Angle <  360), Fuel = C4}]]
 	["thruster1"] = {Thrust = {x = 20000, y = 20000}, Arc = 360, Angle = 360, drain = 1.1},
 	["thruster2"] = {Thrust = {x = 30000, y = 30000}, Arc = 360, Angle = 360, drain = 2.3},
-	--["thruster2"] = {Thrust = {x = 40000, y = 40000}, Arc = 60, Angle = 120, drain = 1.7},
+	["marchThruster"] = {Thrust = {x = 33000, y = 33000}, Arc = 40, Angle = 110, drain = 1.4},
 }
 
 function LoadThrusters()

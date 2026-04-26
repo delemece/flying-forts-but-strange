@@ -12,7 +12,7 @@ Effects =
 		SparkCount = 20,
 		BurstPeriod = 0.01,
 		SparksPerBurst = 1,
-		LocalPosition = { x = 0, y = 0, z = -50 },	-- how to place the origin relative to effect position and direction (0, 0) 
+		LocalPosition = { x = 0, y = 2, z = -50 },	-- how to place the origin relative to effect position and direction (0, 0) 
 		Sprite = "thead2",
 
 		Gravity = 0,						-- gravity applied to particle (981 is earth equivalent)

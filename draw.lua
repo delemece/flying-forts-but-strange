@@ -29,13 +29,17 @@ end
 function DrawThrusters()
 	for i, v in pairs(data.Thrusters) do 
 		local ang = GetDeviceAngle(i)
+		local ThPos = 55
+		if v.SN == "marchThruster" then
+			ThPos = -55
+		end
 		if v.fly and v.effectId == -1 then
 		v.effectId = SpawnEffect(path .."/effects/th_".. v.SN ..".lua", GetDevicePosition(i))
 		SetEffectDirection(v.effectId,Vec3(math.cos(v.ang) * (-1), math.sin(v.ang)))
-		SetEffectPosition(v.effectId,Vec3(GetDevicePosition(i).x - 50 * math.cos(ang) * -1, GetDevicePosition(i).y - 50 * math.sin(ang)))
+		SetEffectPosition(v.effectId,Vec3(GetDevicePosition(i).x - ThPos * math.cos(ang) * -1, GetDevicePosition(i).y - ThPos * math.sin(ang)))
 		elseif 	v.fly then
 		SetEffectDirection(v.effectId,Vec3(math.cos(v.ang) * (-1), math.sin(v.ang)))
-		SetEffectPosition(v.effectId,Vec3(GetDevicePosition(i).x - 50 * math.cos(ang) * -1, GetDevicePosition(i).y - 50 * math.sin(ang)))
+		SetEffectPosition(v.effectId,Vec3(GetDevicePosition(i).x - ThPos * math.cos(ang) * -1, GetDevicePosition(i).y - ThPos * math.sin(ang)))
 		else
 		CancelEffect(v.effectId)
 		v.effectId = -1
@@ -88,7 +92,7 @@ function OnKey(key, down)
 		if IsDesiredDevice(ContName, GetLocalSelectedDeviceId()) then
 			changeUi = true
 		end
-		if data.Structures.Forces[CurrentStruct] ~= nil then
+		if data.Structures.Forces[CurrentStruct] ~= nil and kPressed == 0 then
 			SavedForce = Vec3(data.Structures.Forces[CurrentStruct].x, data.Structures.Forces[CurrentStruct].y, 0)
 		end
 	elseif not (IsDesiredDevice(ContName, GetLocalSelectedDeviceId())) or key == "mouse right" then
@@ -99,7 +103,7 @@ function OnKey(key, down)
 	elseif key == "mouse left" and not down then
 		changeUi = false
 		
-		if data.Structures.Forces[CurrentStruct] ~= nil then
+		if data.Structures.Forces[CurrentStruct] ~= nil and kPressed == 0 then
 			SavedForce = Vec3(data.Structures.Forces[CurrentStruct].x, data.Structures.Forces[CurrentStruct].y, 0)
 		end	
 	end

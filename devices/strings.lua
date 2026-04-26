@@ -5,7 +5,10 @@ Merge(Device,
 	thruster1Tip3 = L"The economic and effective with a price of less thrust",
 	
 	thruster2 = L"AL-7",
-	thruster2Tip2 = L"Very powerful yet less effective fuel vice",
+	thruster2Tip2 = L"Very powerful thruster yet less effective fuel vice. Helm needed to control.",
+	
+	marchThruster = L"AL-21S",
+	marchThrusterTip2 = L"Static thruster, gives more thrust with cost of very limited angles of work. Helm needed to control.",
 	
 	tank_S = L"Small fuel tank",
 	tank_STip2 = L"Stores some amount of fuel (EMPTY WHEN PLACED PLACE FUEL STATION)",
@@ -19,7 +22,7 @@ Merge(Device,
 	refuelTip2 = L"Refuels fuel tanks on the same fort",
 	refuelTip3 = L"duh",
 	
-	chasics1 = L"Chasics",
+	chasics1 = L"Chassis",
 	chasics1Tip2 = L"holds your flying fort without having to directly connect to the ground",
 	chasics1Tip3 = L"\"we have hover forts at home\"",
 })
