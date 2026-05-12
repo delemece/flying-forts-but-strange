@@ -38,13 +38,16 @@ BarrelLength = 100.0
 MinFireClearance = 500
 FireClearanceOffsetInner = 20
 FireClearanceOffsetOuter = 40
-ReloadTime = 26
-MinFireSpeed = 6000.0
-MaxFireSpeed = 6000.1
-MinFireRadius = 600.0
-MaxFireRadius = 1200.0
-MinFireAngle = -20
-MaxFireAngle = 25
+ReloadTime = 30
+MinFireSpeed = 10000.0
+MaxFireSpeed = 10000.1
+MinFireRadius = 300.0
+MaxFireRadius = 1500.0
+
+MaxFireClamp = 0.95
+
+MinFireAngle = -30
+MaxFireAngle = 40
 KickbackMean = 15
 KickbackStdDev = 3
 MouseSensitivityFactor = 0.5
@@ -62,11 +65,15 @@ ReloadFramePeriod = (ReloadTime + RoundsEachBurst*RoundPeriod)/12
 DoorCloseDelay = 1
 AutofireCloseDoorTicks = DoorCloseDelay*25
 
+MouseSensitivityFactor = 0.2
+
 BarrelRecoilLimit = -0.2
 BarrelRecoilSpeed = -2
 BarrelReturnForce = 0.5
 
-
+TriggerProjectileAgeAction = true
+MinAgeTrigger = 0.5
+MaxAgeTrigger = 3.1
 
 
 TargetIcon =
@@ -132,7 +139,7 @@ Root =
 						{
 							Name = "Chamber",
 							Angle = 0,
-							Pivot = { -0.5, 0.0 },
+							Pivot = { -0.3, 0.0 },
 							PivotOffset = { 0, 0 },
 						},
 					},

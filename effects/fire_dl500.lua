@@ -43,7 +43,7 @@ Effects =
 		FadeInPeriod = 0.0,
 		LocalPosition = { x = 0, y = 0, z = 0 },
 		Sound = path .. "/effects/media/dl-500.mp3",
-		Volume = 0.45,
+		Volume = 0.35,
 		Priority = 192,
 		Repeat = false,
 		RandomiseStart = false,
@@ -53,7 +53,7 @@ Effects =
 	{
 		Type = "sprite",
 		TimeToTrigger = 0,
-		LocalPosition = { x = 0, y = 200, z = 0 },
+		LocalPosition = { x = 0, y = 0, z = 0 },
 		LocalVelocity = { x = 0, y = 0, z = 0 },
 		Acceleration = { x = 0, y = 0, z = 0 },
 		Drag = 0.0,

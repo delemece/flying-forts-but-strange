@@ -1,5 +1,5 @@
 ConstructEffect = "effects/device_construct.lua"
-CompleteEffect = "effects/device_complete.lua"
+DestroyEffect = path .. "/effects/idle.lua"
 Scale = 1
 SelectionWidth = 40.0
 SelectionHeight = 40.0
@@ -13,15 +13,6 @@ MetalStorageCapacity = 0.0
 MinWindEfficiency = 0
 MaxWindHeight = 0
 MaxRotationalSpeed = 0
-DeviceSplashDamage = 200
-DeviceSplashDamageMaxRadius = 250
-DeviceSplashDamageDelay = 0.3
-IgnitePlatformOnDestruct = true
-IncendiaryRadius = 120
-IncendiaryRadiusHeated = 150
-StructureSplashDamage = 200
-StructureSplashDamageMaxRadius = 150
-IgnitePlatformOnDestruct = true
 Repairable = true
 ClaimsStructures = true
 

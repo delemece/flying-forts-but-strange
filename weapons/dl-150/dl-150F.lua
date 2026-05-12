@@ -25,7 +25,7 @@ IncendiaryRadiusHeated = 150
 StructureSplashDamage = 150
 StructureSplashDamageMaxRadius = 150
 
-FireEffect = "effects/fire_cannon.lua"
+FireEffect = path .. "/effects/fire_150.lua"
 ConstructEffect = "effects/device_construct.lua"
 CompleteEffect = "effects/device_complete.lua"
 DestroyEffect = "effects/cannon_explode.lua"
@@ -63,8 +63,8 @@ DoorCloseDelay = 1
 AutofireCloseDoorTicks = DoorCloseDelay*25
 
 BarrelRecoilLimit = -0.2
-BarrelRecoilSpeed = -2
-BarrelReturnForce = 0.5
+BarrelRecoilSpeed = -3
+BarrelReturnForce = 2
 
 CanOverheat = true
 HeatPeriod = 0.4
@@ -140,7 +140,7 @@ Root =
 						{
 							Name = "Hardpoint0",
 							Angle = 90,
-							Pivot = { 0.25, -0.1 },
+							Pivot = { 0.5, -0.1 },
 							PivotOffset = { 0, 0 },
 						},
 						{

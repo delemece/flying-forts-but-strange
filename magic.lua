@@ -88,3 +88,7 @@ function Watch(T, index)
 	watchlist[index] = T
 	return index
 end
+
+function VecLIn(from, to, t)
+	return Vec3(from.x + (to.x - from.x) * t, from.y + (to.y - from.y) * t, 0)
+end

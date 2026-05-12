@@ -1,4 +1,60 @@
+table.insert(Projectiles,
+{
+		SaveName = "shrap",
 
+		ProjectileType = "mortar",
+		ProjectileSprite = "weapons/media/bullet",
+		DrawBlurredProjectile = true,
+		ProjectileMass = 1.0,
+		ProjectileDrag = 0,
+		ProjectileIncendiary = false,
+		DeflectedByShields = false,
+		ExplodeOnTouch = false,
+		ProjectileThickness = 3.0,
+		ProjectileShootDownRadius = 60,
+		Impact = 20000,
+		DisableShields = false,
+		BeamTileRate = 0.02,
+		BeamScrollRate = 0.0,
+		ProjectileDamage = 70.0,
+		PenetrationDamage = 350,
+		WeaponDamageBonus = 3,
+		
+		ProjectileSplashDamage = 7,
+		ProjectileSplashDamageMaxRadius = 20.0,
+		
+		SpeedIndicatorFactor = 9,
+		MinAge = 0.1,
+		MaxAge = 0.3,
+		
+		--TrailEffect = "effects/cannon_trail.lua",
+		TrailEffect = path .. "/effects/ef1.lua",
+		
+	Effects =
+		{
+			Impact =
+			{
+				["device"] = "effects/impact_light.lua",
+				["foundations"] = "effects/impact_light_ground.lua",
+				["rocks01"] = "effects/impact_light_ground.lua",
+				["bracing"] = "effects/impact_light.lua",
+				["armour"] = "effects/impact_light.lua",
+				["door"] = "effects/impact_lingt.lua",
+				["default"] = "effects/impact_light.lua",
+			},	
+			Deflect =
+			{
+				["armour"] = "effects/armor_ricochet.lua",
+				["door"] = "effects/armor_ricochet.lua",
+				["shield"] = "effects/energy_shield_ricochet.lua",
+			},
+		},
+		MomentumThreshold =
+		{
+			["armour"] = { Reflect = 0, Penetrate = 4000 },
+			["door"] = { Reflect = 0, Penetrate = 4000 },
+		},
+})
 
 table.insert(Projectiles,
 {
@@ -22,7 +78,7 @@ table.insert(Projectiles,
 		ProjectileSplashDamage = 20,
 		ProjectileSplashDamageMaxRadius = 200.0,
 		SpeedIndicatorFactor = 0.05,
-		TrailEffect = "/effects/cannon_trail.lua",
+		TrailEffect = "effects/cannon_trail.lua",
 
 		MinAge = 5,
 		MaxAge = 6,
@@ -66,19 +122,21 @@ table.insert(Projectiles,
 		ProjectileIncendiary = false,
 		DeflectedByShields = false,
 		ExplodeOnTouch = false,
-		ProjectileThickness = 12.0,
+		ProjectileThickness = 10.0,
 		ProjectileShootDownRadius = 60,
 		Impact = 200000,
 		BeamTileRate = 0.02,
 		BeamScrollRate = 0.0,
 		ProjectileDamage = 850.0,
+		PenetrationDamage = 500,
 		ProjectileSplashDamage = 20,
 		ProjectileSplashDamageMaxRadius = 100.0,
 		SpeedIndicatorFactor = 15,
 		DestroyShields = true,
+		MinAge = 4,
+		MaxAge = 5,
 
-
-		TrailEffect = "/effects/cannon_trail.lua",
+		TrailEffect = "effects/cannon_trail.lua",
 
 	Effects =
 		{
@@ -110,41 +168,47 @@ table.insert(Projectiles,
 		},
 })
 
-PDetonation = { Effect = "mods/weapon_pack/effects/fire_20mmcannon.lua", Projectile = { Count = 22, Type = "shrap", Speed = 4000, StdDev = 0.02, AngleOffset = 0.01 }, Offset = 0, Terminate = true, }
+PDetonation = { Effect = path .."/effects/pdet.lua", Projectile = { Count = 30, Type = "shrap", Speed = 15000, StdDev = 1.1, AngleOffset = 0.01 }, Offset = 0, Terminate = true, }
 
 table.insert(Projectiles,
 {
-		SaveName = "dl500P",
+	SaveName = "dl500P",
 
-		ProjectileType = "mortar",
-		ProjectileSprite = "weapons/media/bullet",
-		DrawBlurredProjectile = true,
-		ProjectileMass = 80.0,
-		ProjectileDrag = 0,
-		ProjectileIncendiary = false,
-		DeflectedByShields = false,
-		ExplodeOnTouch = true,
-		ProjectileThickness = 14.0,
-		ProjectileShootDownRadius = 150,
-		ProjectileShootDownRadiusBeamWidth = 15,
-		Impact = 100000,
-		BeamTileRate = 0.02,
-		BeamScrollRate = 0.0,
-		ProjectileDamage = 100.0,
-		ProjectileSplashDamage = 5,
-		ProjectileSplashDamageMaxRadius = 250.0,
-		SpeedIndicatorFactor = 15,
-		DestroyShields = true,
-		ExplodeOnTouch = true,
-		CollisionLookaheadDist = 700,
-		AntiAirHitpoints = 60,
+	ProjectileType = "mortar",
+	ProjectileSprite = path .. "/weapons/dl-520/bullet",
+	ProjectileSpriteMipMap = false,
+	DrawBlurredProjectile = true,
+	ProjectileMass = 80.0,
+	ProjectileDrag = 0,
+	DeflectedByShields = false,
+	ExplodeOnTouch = true,
+	ProjectileThickness = 10.0,
+	ProjectileShootDownRadius = 50,
+	ProjectileShootDownRadiusBeamWidth = 200,
+	CollisionLookaheadDist = 50,
+	Impact = 100000,
+	ProjectileDamage = 100.0,
+	AntiAirDamage = 0,
+	WeaponDamageBonus = 2,
+	SpeedIndicatorFactor = 5.0,
+	BeamTileRate = 0.02,
+	BeamScrollRate = 0.0,
+	
+	MinAge = 5,
+	MaxAge = 4,
+	
+	TrailEffect = path .. "/effects/bluetrail.lua",
 
-		TrailEffect = "/effects/cannon_trail.lua",
+	DamageMultiplier =
+	{
+		{ SaveName = "default", Direct = 0, },
+	},
 
 	Effects =
-		{
+	{
 		Impact =
 		{
+			["firebeam"] = PDetonation,
 			["device"] = PDetonation,
 			["foundations"] = PDetonation,
 			["rocks01"] = PDetonation,
@@ -155,76 +219,22 @@ table.insert(Projectiles,
 			["shield"] = PDetonation,
 			["default"] = PDetonation,
 		},
-			Deflect =
-			{
-				["armour"] = "effects/armor_ricochet.lua",
-				["door"] = "effects/armor_ricochet.lua",
-			},
-			Penetrate =
-			{
-				["shield"] = {"effects/energy_shield_ricochet.lua", Terminate = false},
-			},
-		},
-		MomentumThreshold =
+		Deflect =
 		{
-			["armour"] = { Reflect = 0, Penetrate = 4000 },
-			["door"] = { Reflect = 0, Penetrate = 4000 },
+			["bracing"] = "effects/bullet_bracing_hit.lua",
+			["backbracing"] = "effects/bullet_bracing_hit.lua",
+			["armour"] = "effects/bullet_armor_ricochet.lua",
+			["door"] = "effects/bullet_armor_ricochet.lua",
+			["shield"] = "effects/energy_shield_ricochet.lua",
+			["default"] = "effects/bullet_bracing_hit.lua",
 		},
-				Age =
+		Age =
 		{
 			t200 = PDetonation,
 		},
+	},
 })
 
-table.insert(Projectiles,
-{
-		SaveName = "shrap",
-
-		ProjectileType = "bullet",
-		ProjectileSprite = "weapons/media/bullet",
-		DrawBlurredProjectile = true,
-		ProjectileMass = 1.0,
-		ProjectileDrag = 0,
-		ProjectileIncendiary = false,
-		DeflectedByShields = false,
-		ExplodeOnTouch = false,
-		ProjectileThickness = 3.0,
-		ProjectileShootDownRadius = 60,
-		Impact = 20000,
-		DisableShields = false,
-		BeamTileRate = 0.02,
-		BeamScrollRate = 0.0,
-		ProjectileDamage = 50.0,
-		SpeedIndicatorFactor = 9,
-		MinAge = 0.2,
-		MaxAge = 1,
-		TrailEffect = "/effects/cannon_trail.lua",
-
-	Effects =
-		{
-			Impact =
-			{
-				["device"] = "effects/impact_light.lua",
-				["foundations"] = "effects/impact_light_ground.lua",
-				["rocks01"] = "effects/impact_light_ground.lua",
-				["bracing"] = "effects/impact_light.lua",
-				["armour"] = "effects/impact_light.lua",
-				["door"] = "effects/impact_lingt.lua",
-				["default"] = "effects/impact_light.lua",
-			},	
-			Deflect =
-			{
-				["armour"] = "effects/armor_ricochet.lua",
-				["door"] = "effects/armor_ricochet.lua",
-				["shield"] = "effects/energy_shield_ricochet.lua",
-			},
-		},
-		MomentumThreshold =
-		{
-			["armour"] = { Reflect = 0, Penetrate = 4000 },
-			["door"] = { Reflect = 0, Penetrate = 4000 },
-		},
-})
 
 table.insert(Sprites,
 {
@@ -383,3 +393,7 @@ table.insert(Projectiles,
 })
 
 ]]
+
+MakeFlamingVersion("dl150",		1.25,	 0.5, flamingTrail, nil, smallArmsFlare)
+MakeFlamingVersion("shrap",		1.25,	 0.1, flamingTrail, nil, smallArmsFlare)
+MakeFlamingVersion("dl500",		0.63,	1.1, flamingTrail, nil, genericFlamingExpire)

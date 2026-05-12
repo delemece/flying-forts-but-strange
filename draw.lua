@@ -67,7 +67,7 @@ function OnKey(key, down)
 		
 		if down == true then
 			kPressed = kPressed + 1
-		else
+		elseif down == false then
 			kPressed = kPressed - 1
 		end
 	end
@@ -112,9 +112,19 @@ function OnKey(key, down)
 		kPressed = 0
 	end
 	
-	if kPressed == 0 and MovementKeys[key] ~= nil and not down then
-		SendScriptEvent("SetForce", tostring(SavedForce.x) .. " , " .. tostring(SavedForce.y) .. " , " .. tostring(CurrentStruct), "", true)
+	--[[if kPressed == 0 and MovementKeys[key] ~= nil and not down then
 		Hmove = Vec3(0, 0, 0)
+		local temp = data.Structures.Forces[CurrentStruct]
+		for i = 0.1, 1, 0.1 do 
+			local v = VecLIn(SavedForce, temp, i)
+			--SendScriptEvent("SetForce", tostring(SavedForce.x) .. " , " .. tostring(SavedForce.y) .. " , " .. tostring(CurrentStruct), "", true)
+			ScheduleCall(i,SetForce, v.x, v.y, CurrentStruct)
+		end
+	end]]
+	
+	if kPressed == 0 and MovementKeys[key] ~= nil and not down then
+		Hmove = Vec3(0, 0, 0)
+		SendScriptEvent("SetForce", tostring(SavedForce.x) .. " , " .. tostring(SavedForce.y) .. " , " .. tostring(CurrentStruct), "", true)
 	end
 	--Log("Current direction: " .. tostring(Structures.Forces[CurrentStruct].x) .. " " .. tostring(Structures.Forces[CurrentStruct].y))
 	return 

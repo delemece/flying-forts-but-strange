@@ -45,9 +45,19 @@ function OnDeviceCompleted(teamId, deviceId, saveName)
 		data.FuelS.ReFuel[deviceId] = true
 	elseif saveName == chas then
 		data.chasics[deviceId] = {GetDevicePlatformA(deviceId), GetDevicePlatformB(deviceId),
-		effectId = -1, hitpos = -1, hitpos2 = -1, hit = -1, groudAngle = -1
-	}
+		effectId = -1, hitpos = -1, hitpos2 = -1, hit = -1, groudAngle = -1}
+	elseif saveName == "controller" then
+		local a = GetDevicePlatformA(deviceId)
+		local b = GetDevicePlatformB(deviceId)
+		local team = GetDeviceTeamId(deviceId)
+		local pos = GetDeviceLinkPosition(deviceId)
+		ScheduleCall(0.15,cont__, a, b , team , pos)
+		ApplyDamageToDevice(deviceId, 1000) -- тут потом сделать чтобы оно именно удаляло
 	end
+end
+
+function cont__(a, b , team, pos)
+	CreateDevice(team, "infcontroller", a, b, pos)
 end
 
 function OnDeviceDestroyed(teamId, deviceId, saveName, nodeA, nodeB, t)
@@ -101,15 +111,23 @@ end
 --Movement--
 
 function SetForce(x, y, deviceId)
-	local str = GetDeviceStructureId(deviceId)
-	for i, v in pairs(data.Structures.Affected) do 
-		if GetDeviceStructureId(i) == str then
-			data.Structures.Forces[i] = Vec3(tonumber(x),tonumber(y), 0)
+	local timeCoef = 1
+	for t = 0.1, 1, 0.1 do
+		if data.Structures.Forces[deviceId] == nil then break end
+		local v = VecLIn(data.Structures.Forces[deviceId], Vec3(tonumber(x), tonumber(y) , 0), t)
+		local str = GetDeviceStructureId(deviceId)
+		for i, G in pairs(data.Structures.Affected) do 
+			if GetDeviceStructureId(i) == str then
+				ScheduleCall(t * timeCoef, set__, i, v)
+			end
 		end
 	end
 end
 
-
+function set__(i,v)
+	data.Structures.Forces[i] = v
+end
+	
 function MoveStruct()
 	local used = {}
 	for contId, h in pairs(data.Structures.Affected) do

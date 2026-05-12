@@ -45,7 +45,7 @@ table.insert(Devices, IndexOfDevice("sandbags") + 3,
 	EnergyCost = 1500,
 	MetalRepairCost = 100,
 	EnergyRepairCost = 750,
-	MaxUpAngle = 60,
+	MaxUpAngle = 40,
 	BuildOnGroundOnly = false,
 })
 table.insert(Sprites, ButtonSprite("hud-tank_S-icon", "HUD/HUD-tank_S", nil, ButtonSpriteBottom, nil, nil, path))
@@ -76,6 +76,23 @@ table.insert(Devices, IndexOfDevice("sandbags") + 5,
 	ScrapPeriod = 1,
 	MetalCost = 500,
 	EnergyCost = 4000,
+	MetalRepairCost = 100,
+	EnergyRepairCost = 750,
+	MaxUpAngle = StandardMaxUpAngle,
+	BuildOnGroundOnly = false,
+})
+
+table.insert(Sprites, ButtonSprite("hud-controller-icon", "HUD/HUD-infcontroller", nil, ButtonSpriteBottom, nil, nil, path))
+table.insert(Devices, IndexOfDevice("sandbags") - 1,
+{
+	SaveName = "controller",
+	FileName = path .. "/devices/controller.lua",
+	Icon = "hud-controller-icon",
+	Detail = "hud-detail-repairstation",
+	BuildTimeComplete = 3,
+	ScrapPeriod = 1,
+	MetalCost = 200,
+	EnergyCost = 3000,
 	MetalRepairCost = 100,
 	EnergyRepairCost = 750,
 	MaxUpAngle = StandardMaxUpAngle,

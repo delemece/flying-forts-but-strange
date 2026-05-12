@@ -38,13 +38,13 @@ BarrelLength = 100.0
 MinFireClearance = 500
 FireClearanceOffsetInner = 20
 FireClearanceOffsetOuter = 40
-ReloadTime = 26
-MinFireSpeed = 8000.0
-MaxFireSpeed = 8000.1
+ReloadTime = 28
+MinFireSpeed = 12000.0
+MaxFireSpeed = 12000.1
 MinFireRadius = 600.0
 MaxFireRadius = 1200.0
-MinFireAngle = -20
-MaxFireAngle = 25
+MinFireAngle = -30
+MaxFireAngle = 40
 KickbackMean = 15
 KickbackStdDev = 3
 MouseSensitivityFactor = 0.5
@@ -158,7 +158,7 @@ Root =
 						{
 							Name = "Chamber",
 							Angle = 0,
-							Pivot = { -0.5, 0.0 },
+							Pivot = { -0.3, 0.0 },
 							PivotOffset = { 0, 0 },
 						},
 					},
