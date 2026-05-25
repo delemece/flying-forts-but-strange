@@ -71,7 +71,7 @@ function OnKey(key, down)
 			kPressed = kPressed - 1
 		end
 	end
-	if (IsDesiredDevice(ContName, GetLocalSelectedDeviceId())) and not (key == "mouse right") and not ShwUI and ((GetLocalTeamId() % 10) == GetDeviceTeamId(GetLocalSelectedDeviceId())) then
+	if (IsDesiredDevice(ContName, GetLocalSelectedDeviceId())) and not (key == "mouse right") and not ShwUI and (GetTeamId(GetLocalTeamId()) == GetDeviceTeamIdActual(GetLocalSelectedDeviceId())) then
 
 		ShwUI = true
 		local location = ControlPlace
