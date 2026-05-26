@@ -111,6 +111,14 @@ end
 --Movement--
 
 function SetForce(x, y, deviceId)
+	local str = GetDeviceStructureId(deviceId)
+	for i, v in pairs(data.Structures.Affected) do 
+		if GetDeviceStructureId(i) == str then
+			data.Structures.Forces[i] = Vec3(tonumber(x),tonumber(y), 0)
+		end
+	end
+end
+	--[[
 	local timeCoef = 1
 	for t = 0.1, 1, 0.1 do
 		if data.Structures.Forces[deviceId] == nil then break end
@@ -127,6 +135,7 @@ end
 function set__(i,v)
 	data.Structures.Forces[i] = v
 end
+]]--
 	
 function MoveStruct()
 	local used = {}
