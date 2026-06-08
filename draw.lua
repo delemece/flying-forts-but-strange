@@ -1,8 +1,8 @@
-changeUi = false
-Hmove = Vec3(0, 0, 0)
-CurrentStruct = -1
-MovementKeys = {["up"] = Vec3(0, -1, 0), ["right"] = Vec3(1, 0, 0), ["left"] = Vec3(-1, 0, 0), ["down"] = Vec3(0, 1, 0)}
-exists = false
+local changeUi = false
+local Hmove = Vec3(0, 0, 0)
+local CurrentStruct = -1
+local MovementKeys = {["up"] = Vec3(0, -1, 0), ["right"] = Vec3(1, 0, 0), ["left"] = Vec3(-1, 0, 0), ["down"] = Vec3(0, 1, 0)}
+local exists = false
 local kPressed = 0
 local SavedForce = Vec3(0, 0, 0)
 
@@ -37,7 +37,7 @@ function DrawThrusters()
 		v.effectId = SpawnEffect(path .."/effects/th_".. v.SN ..".lua", GetDevicePosition(i))
 		SetEffectDirection(v.effectId,Vec3(math.cos(v.ang) * (-1), math.sin(v.ang)))
 		SetEffectPosition(v.effectId,Vec3(GetDevicePosition(i).x - ThPos * math.cos(ang) * -1, GetDevicePosition(i).y - ThPos * math.sin(ang)))
-		elseif 	v.fly then
+		elseif v.fly then
 		SetEffectDirection(v.effectId,Vec3(math.cos(v.ang) * (-1), math.sin(v.ang)))
 		SetEffectPosition(v.effectId,Vec3(GetDevicePosition(i).x - ThPos * math.cos(ang) * -1, GetDevicePosition(i).y - ThPos * math.sin(ang)))
 		else
@@ -65,9 +65,9 @@ function OnKey(key, down)
 	if MovementKeys[key] ~= nil then
 		HandyFunc(key, down)
 		
-		if down == true then
+		if down then
 			kPressed = kPressed + 1
-		elseif down == false then
+		else
 			kPressed = kPressed - 1
 		end
 	end
@@ -148,5 +148,8 @@ function OnUpdate(deltaTime)
 	end
 	DrawThrusters()
 	DrawChas()
+	if ShwUI and data.Structures.Forces[CurrentStruct] ~= nil then
+		SetControlAbsolutePos("BUTTON1", "BUTTON2", Vec3(ControlPlace.x - data.Structures.Forces[CurrentStruct].x, ControlPlace.y - data.Structures.Forces[CurrentStruct].y))
+	end
 end
 

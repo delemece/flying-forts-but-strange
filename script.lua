@@ -5,6 +5,7 @@ dofile(path .. "/thrusters.lua")
 
 data.Structures = {Nodes = {--[[deviceId, Nodes]]}, Affected = {--[[devIdcont, True/nil]]}, Forces = {--[[devIdcont, vec3]]}}
 data.FuelS = {Fuel = {--[[contId, {cap, fuel}]]}, ReFuel = {--[[devId, True/nil]]}, Tnk = {--[[dont touch]]}, iFuel = {--[[dont touch]]}}
+data.Lock = {--[[deviceId, Status]]}
 data.chasics = {}
 data.Thrusters = {}
 ControlPlace = Vec3(450, 400, 0)
@@ -115,11 +116,11 @@ function SetForce(x, y, deviceId)
 	for i, v in pairs(data.Structures.Affected) do 
 		if GetDeviceStructureId(i) == str then
 			data.Structures.Forces[i] = Vec3(tonumber(x),tonumber(y), 0)
-		end
-	end
-end
-	--[[
-	local timeCoef = 1
+	local timeCoef = 0.1
+
+	if data.Lock[deviceId] then return
+	else data.Lock[deviceId] = true end
+
 	for t = 0.1, 1, 0.1 do
 		if data.Structures.Forces[deviceId] == nil then break end
 		local v = VecLIn(data.Structures.Forces[deviceId], Vec3(tonumber(x), tonumber(y) , 0), t)
@@ -130,13 +131,19 @@ end
 			end
 		end
 	end
+	if data.Lock[deviceId] then
+		ScheduleCall(1, SET__, deviceId, nil)
+	end
+	return
 end
 
 function set__(i,v)
 	data.Structures.Forces[i] = v
 end
-]]--
-	
+function SET__(i,v)
+	data.Lock[i] = v
+end
+
 function MoveStruct()
 	local used = {}
 	for contId, h in pairs(data.Structures.Affected) do
@@ -158,7 +165,6 @@ function Update(frame)
 	if changeUi then
 		local mouse = GetMousePos()
 		if  VecLen(Vec3(mouse.x - ControlPlace.x, mouse.y - ControlPlace.y, 0)) < ControlRadius then 
-			SetControlAbsolutePos("BUTTON1", "BUTTON2", mouse)
 			SendScriptEvent("SetForce", tostring(mouse.x - ControlPlace.x) .. " , " .. tostring(mouse.y - ControlPlace.y) .. " , " .. tostring(CurrentStruct), "", true)
 		end
 	end
