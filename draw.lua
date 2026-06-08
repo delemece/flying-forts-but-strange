@@ -71,6 +71,11 @@ function OnKey(key, down)
 			kPressed = kPressed - 1
 		end
 	end
+
+	if kPressed < 0 then
+		kPressed = 0
+	end
+
 	if (IsDesiredDevice(ContName, GetLocalSelectedDeviceId())) and not (key == "mouse right") and not ShwUI and (GetTeamId(GetLocalTeamId()) == GetDeviceTeamIdActual(GetLocalSelectedDeviceId())) then
 
 		ShwUI = true
@@ -105,13 +110,8 @@ function OnKey(key, down)
 		
 		if data.Structures.Forces[CurrentStruct] ~= nil and kPressed == 0 then
 			SavedForce = Vec3(data.Structures.Forces[CurrentStruct].x, data.Structures.Forces[CurrentStruct].y, 0)
-		end	
+		end
 	end
-	
-	if kPressed < 0 then
-		kPressed = 0
-	end
-	
 	--[[if kPressed == 0 and MovementKeys[key] ~= nil and not down then
 		Hmove = Vec3(0, 0, 0)
 		local temp = data.Structures.Forces[CurrentStruct]
@@ -149,7 +149,7 @@ function OnUpdate(deltaTime)
 	DrawThrusters()
 	DrawChas()
 	if ShwUI and data.Structures.Forces[CurrentStruct] ~= nil then
-		SetControlAbsolutePos("BUTTON1", "BUTTON2", Vec3(ControlPlace.x - data.Structures.Forces[CurrentStruct].x, ControlPlace.y - data.Structures.Forces[CurrentStruct].y))
+		SetControlAbsolutePos("BUTTON1", "BUTTON2", Vec3(ControlPlace.x + data.Structures.Forces[CurrentStruct].x, ControlPlace.y + data.Structures.Forces[CurrentStruct].y))
 	end
 end
 

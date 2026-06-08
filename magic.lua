@@ -92,3 +92,9 @@ end
 function VecLIn(from, to, t)
 	return Vec3(from.x + (to.x - from.x) * t, from.y + (to.y - from.y) * t, 0)
 end
+
+function GIVEMEANERROR()
+	local a = {}
+	return a.x
+end
+

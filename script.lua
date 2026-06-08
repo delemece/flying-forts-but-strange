@@ -112,29 +112,20 @@ end
 --Movement--
 
 function SetForce(x, y, deviceId)
-	local str = GetDeviceStructureId(deviceId)
-	for i, v in pairs(data.Structures.Affected) do 
-		if GetDeviceStructureId(i) == str then
-			data.Structures.Forces[i] = Vec3(tonumber(x),tonumber(y), 0)
 	local timeCoef = 0.1
 
 	if data.Lock[deviceId] then return
 	else data.Lock[deviceId] = true end
 
-	for t = 0.1, 1, 0.1 do
+	for local t = 0.1, 1, 0.1 do
 		if data.Structures.Forces[deviceId] == nil then break end
 		local v = VecLIn(data.Structures.Forces[deviceId], Vec3(tonumber(x), tonumber(y) , 0), t)
-		local str = GetDeviceStructureId(deviceId)
-		for i, G in pairs(data.Structures.Affected) do 
-			if GetDeviceStructureId(i) == str then
-				ScheduleCall(t * timeCoef, set__, i, v)
-			end
-		end
+		ScheduleCall(t * timeCoef, set__, i, v)
 	end
 	if data.Lock[deviceId] then
-		ScheduleCall(1, SET__, deviceId, nil)
+		ScheduleCall(timeCoef + 0.01, SET__, deviceId, nil)
 	end
-	return
+	return 
 end
 
 function set__(i,v)
