@@ -78,7 +78,7 @@ function LogWatch()
 		else Log(tostring(T)) end
 	end
 end
-
+--[[
 function Watch(T, index)
 	if index == -1 then
 		local count = #watchlist
@@ -88,13 +88,13 @@ function Watch(T, index)
 	watchlist[index] = T
 	return index
 end
-
+]]
 function VecLIn(from, to, t)
 	return Vec3(from.x + (to.x - from.x) * t, from.y + (to.y - from.y) * t, 0)
 end
 
 function GIVEMEANERROR()
 	local a = {}
-	return a.x
+	return a[4] == 'a'
 end
 

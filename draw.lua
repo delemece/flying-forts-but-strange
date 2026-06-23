@@ -1,11 +1,10 @@
-local changeUi = false
-local Hmove = Vec3(0, 0, 0)
-local CurrentStruct = -1
-local MovementKeys = {["up"] = Vec3(0, -1, 0), ["right"] = Vec3(1, 0, 0), ["left"] = Vec3(-1, 0, 0), ["down"] = Vec3(0, 1, 0)}
-local exists = false
-local kPressed = 0
-local SavedForce = Vec3(0, 0, 0)
-
+changeUi = false
+Hmove = Vec3(0, 0, 0)
+CurrentStruct = -1
+MovementKeys = {["up"] = Vec3(0, -1, 0), ["right"] = Vec3(1, 0, 0), ["left"] = Vec3(-1, 0, 0), ["down"] = Vec3(0, 1, 0)}
+exists = false
+kPressed = 0
+SavedForce = Vec3(0, 0, 0)
 function DrawChas()
 	for i, v in pairs(data.chasics) do
 		if v.hit ~= 1 and v.effectId ~= -1 then 
@@ -34,46 +33,43 @@ function DrawThrusters()
 			ThPos = -55
 		end
 		if v.fly and v.effectId == -1 then
-		v.effectId = SpawnEffect(path .."/effects/th_".. v.SN ..".lua", GetDevicePosition(i))
-		SetEffectDirection(v.effectId,Vec3(math.cos(v.ang) * (-1), math.sin(v.ang)))
-		SetEffectPosition(v.effectId,Vec3(GetDevicePosition(i).x - ThPos * math.cos(ang) * -1, GetDevicePosition(i).y - ThPos * math.sin(ang)))
+			v.effectId = SpawnEffect(path .."/effects/th_".. v.SN ..".lua", GetDevicePosition(i))
+			SetEffectDirection(v.effectId,Vec3(math.cos(v.ang) * (-1), math.sin(v.ang)))
+			SetEffectPosition(v.effectId,Vec3(GetDevicePosition(i).x - ThPos * math.cos(ang) * -1, GetDevicePosition(i).y - ThPos * math.sin(ang)))
 		elseif v.fly then
-		SetEffectDirection(v.effectId,Vec3(math.cos(v.ang) * (-1), math.sin(v.ang)))
-		SetEffectPosition(v.effectId,Vec3(GetDevicePosition(i).x - ThPos * math.cos(ang) * -1, GetDevicePosition(i).y - ThPos * math.sin(ang)))
+			SetEffectDirection(v.effectId,Vec3(math.cos(v.ang) * (-1), math.sin(v.ang)))
+			SetEffectPosition(v.effectId,Vec3(GetDevicePosition(i).x - ThPos * math.cos(ang) * -1, GetDevicePosition(i).y - ThPos * math.sin(ang)))
 		else
-		CancelEffect(v.effectId)
-		v.effectId = -1
+			CancelEffect(v.effectId)
+			v.effectId = -1
 		end
 	end
 end
 
 
 function HandyFunc(k, d)
+	if d then kPressed = kPressed + 1 end
+
+	if kPressed < 0 then kPressed = 0 end
+
 	if d then
 		Hmove = Vec3(Hmove.x + MovementKeys[k].x, Hmove.y + MovementKeys[k].y, 0)
 	elseif not d then 
 		Hmove = Vec3(Hmove.x - MovementKeys[k].x, Hmove.y - MovementKeys[k].y, 0)
 	end
-	if math.abs(Hmove.x) == 1 and math.abs(Hmove.y) == 1 then
-		SendScriptEvent("SetForce", tostring(Hmove.x * ControlRadius * 0.707) .. " , " .. tostring(Hmove.y * ControlRadius * 0.707) .. " , " .. tostring(CurrentStruct), "", true)
+	if (Hmove.x == 0 and Hmove.y == 0) then 
+		SendScriptEvent("SetForce", tostring(SavedForce.x) .. " , " .. tostring(SavedForce.y) .. " , " .. tostring(CurrentStruct) .. " , " .. tostring(d), "",)
+
+	elseif math.abs(Hmove.x) == 1 and math.abs(Hmove.y) == 1 then
+		SendScriptEvent("SetForce", tostring(Hmove.x * ControlRadius * 0.707) .. " , " .. tostring(Hmove.y * ControlRadius * 0.707) .. " , " .. tostring(CurrentStruct) .. " , " .. tostring(d), "", true)
 	else
-		SendScriptEvent("SetForce", tostring(Hmove.x * ControlRadius) .. " , " .. tostring(Hmove.y * ControlRadius) .. " , " .. tostring(CurrentStruct), "", true)
+		SendScriptEvent("SetForce", tostring(Hmove.x * ControlRadius) .. " , " .. tostring(Hmove.y * ControlRadius) .. " , " .. tostring(CurrentStruct) .. " , " .. tostring(d), "", true)
 	end
 end
 
 function OnKey(key, down)
 	if MovementKeys[key] ~= nil then
 		HandyFunc(key, down)
-		
-		if down then
-			kPressed = kPressed + 1
-		else
-			kPressed = kPressed - 1
-		end
-	end
-
-	if kPressed < 0 then
-		kPressed = 0
 	end
 
 	if (IsDesiredDevice(ContName, GetLocalSelectedDeviceId())) and not (key == "mouse right") and not ShwUI and (GetTeamId(GetLocalTeamId()) == GetDeviceTeamIdActual(GetLocalSelectedDeviceId())) then
@@ -82,7 +78,7 @@ function OnKey(key, down)
 		local location = ControlPlace
 
 		--[[if MovementKeys[key] ~= nil then
-			HandyFunc(key, down)
+		HandyFunc(key, down)
 		end]]
 
 		AddButtonControl("HUD", "BUTTON1", path .. "/sprites/" .. CONTTEXTNAME, ANCHOR_CENTER_CENTER, ControlSize, ControlPlace, "Normal")
@@ -91,8 +87,8 @@ function OnKey(key, down)
 		if data.Structures.Forces[CurrentStruct] ~= nil then
 			location = Vec3(data.Structures.Forces[CurrentStruct].x, data.Structures.Forces[CurrentStruct].y, 0)
 		end
-		AddButtonControl("BUTTON1", "BUTTON2", path .. "/sprites/" .. FORCETEXTNAME, ANCHOR_CENTER_CENTER, DirectionSize, location, "Normal")		
-		
+		AddButtonControl("BUTTON1", "BUTTON2", path .. "/sprites/" .. FORCETEXTNAME, ANCHOR_CENTER_CENTER, DirectionSize, location, "Normal")
+
 	elseif key == "mouse left" and down then
 		if IsDesiredDevice(ContName, GetLocalSelectedDeviceId()) then
 			changeUi = true
@@ -107,29 +103,31 @@ function OnKey(key, down)
 
 	elseif key == "mouse left" and not down then
 		changeUi = false
-		
-		if data.Structures.Forces[CurrentStruct] ~= nil and kPressed == 0 and data.Lock[CurrentStruct] == 0 then
+
+		if data.Structures.Forces[CurrentStruct] ~= nil and kPressed == 0 then
 			SavedForce = Vec3(data.Structures.Forces[CurrentStruct].x, data.Structures.Forces[CurrentStruct].y, 0)
 		end
 	end
 	--[[if kPressed == 0 and MovementKeys[key] ~= nil and not down then
-		Hmove = Vec3(0, 0, 0)
-		local temp = data.Structures.Forces[CurrentStruct]
-		for i = 0.1, 1, 0.1 do 
-			local v = VecLIn(SavedForce, temp, i)
-			--SendScriptEvent("SetForce", tostring(SavedForce.x) .. " , " .. tostring(SavedForce.y) .. " , " .. tostring(CurrentStruct), "", true)
-			ScheduleCall(i,SetForce, v.x, v.y, CurrentStruct)
-		end
+	Hmove = Vec3(0, 0, 0)
+	local temp = data.Structures.Forces[CurrentStruct]
+	for i = 0.1, 1, 0.1 do 
+	local v = VecLIn(SavedForce, temp, i)
+	--SendScriptEvent("SetForce", tostring(SavedForce.x) .. " , " .. tostring(SavedForce.y) .. " , " .. tostring(CurrentStruct), "", true)
+	ScheduleCall(i,SetForce, v.x, v.y, CurrentStruct)
+	end
 	end]]
-	
-	if kPressed == 0 and MovementKeys[key] ~= nil and not down then
+
+	if kPressed == 0 and data.Lock[CurrentStruct] == false and MovmentKeys[key] ~= nil then
 		Hmove = Vec3(0, 0, 0)
-		SendScriptEvent("SetForce", tostring(SavedForce.x) .. " , " .. tostring(SavedForce.y) .. " , " .. tostring(CurrentStruct), "", true)
+		SendScriptEvent("SetForce", tostring(SavedForce.x) .. " , " .. tostring(SavedForce.y) .. " , " .. tostring(CurrentStruct) .. " , " .. tostring(4), "", true)
 	end
 	--Log("Current direction: " .. tostring(Structures.Forces[CurrentStruct].x) .. " " .. tostring(Structures.Forces[CurrentStruct].y))
 	return 
 end
+
 function OnUpdate(deltaTime)
+	Log("kjhfgdbg")
 	if CurrentStruct ~= nil and GetDeviceStructureId(CurrentStruct) ~= -1 and data.FuelS.iFuel ~= nil and data.FuelS.iFuel[GetDeviceStructureId(CurrentStruct)] ~= nil then
 		if data.Structures.Affected[CurrentStruct] and ((GetLocalTeamId() % 10) == GetDeviceTeamId(GetLocalSelectedDeviceId())) and not exists then
 			AddSpriteControl("", "Wbase",path .. "/sprites/Wbase", ANCHOR_TOP_RIGHT, Vec3(150, 150, 0), Vec3(1068, 300, 0), false)

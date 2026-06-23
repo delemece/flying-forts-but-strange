@@ -15,10 +15,12 @@ DirectionSize = Vec3(60, 60, 0)
 chas_len = 400
 
 ContName = "infcontroller"
+
 TnkType = {
 ["tank_S"] = 400000,
 ["Tank_B"] = 2000000,
 }
+
 chas = "chasics1"
 Refl = "refuel"
 FORCETEXTNAME = "1.png" -- in /sprites
@@ -82,7 +84,7 @@ function OnDeviceDestroyed(teamId, deviceId, saveName, nodeA, nodeB, t)
 			data.chasics[deviceId] = nil
 		end
 	end
-	if deviceId == CurretStruct then CurrentStruct = nil end
+	if deviceId == CurrentStruct then CurrentStruct = nil end
 end
 
 function OnDeviceDeleted(teamId, deviceId, saveName, nodeA, nodeB, t)
@@ -106,33 +108,36 @@ function OnDeviceDeleted(teamId, deviceId, saveName, nodeA, nodeB, t)
 			data.chasics[deviceId] = nil
 		end
 	end
-	if deviceId == CurretStruct then CurrentStruct = nil end
+	if deviceId == CurrentStruct then CurrentStruct = nil end
 end
 
 --Movement--
 
-function SetForce(x, y, deviceId)
+function SetForce(x, y, deviceId, d)
 	local timeCoef = 0.1
 
 	if data.Lock[deviceId] then return
 	else data.Lock[deviceId] = true end
 
-	for local t = 0.1, 1, 0.1 do
+	for t = 10, 100, 10 do
 		if data.Structures.Forces[deviceId] == nil then break end
-		local v = VecLIn(data.Structures.Forces[deviceId], Vec3(tonumber(x), tonumber(y) , 0), t)
-		ScheduleCall(t * timeCoef, set__, i, v)
+		local check = ((t > 90) and (d == false))
+		local v = VecLIn(data.Structures.Forces[deviceId], Vec3(tonumber(x), tonumber(y) , 0), t / 100)
+		ScheduleCall(t * timeCoef / 100, _set_, deviceId, v, check)
 	end
 	if data.Lock[deviceId] then
 		ScheduleCall(timeCoef + 0.01, SET__, deviceId, nil)
 	end
+	Log(tostring(d) .. " " .. type(d))
 	return 
 end
 
-function set__(i,v)
-	data.Structures.Forces[i] = v
+function _set_(index,value,check)
+	data.Structures.Forces[index] = value
+	if check then kPressed = kPressed - 1 end
 end
-function SET__(i,v)
-	data.Lock[i] = v
+function SET__(index,value)
+	data.Lock[index] = value
 end
 
 function MoveStruct()
@@ -156,16 +161,12 @@ function Update(frame)
 	if changeUi then
 		local mouse = GetMousePos()
 		if  VecLen(Vec3(mouse.x - ControlPlace.x, mouse.y - ControlPlace.y, 0)) < ControlRadius then 
-			SendScriptEvent("SetForce", tostring(mouse.x - ControlPlace.x) .. " , " .. tostring(mouse.y - ControlPlace.y) .. " , " .. tostring(CurrentStruct), "", true)
+			SendScriptEvent("SetForce", tostring(mouse.x - ControlPlace.x) .. " , " .. tostring(mouse.y - ControlPlace.y) .. " , " .. tostring(CurrentStruct) .. " , " .. tostring(4), "", true)
 		end
 	end
 	if frame % 2 == 0 then
 		UpdateTanks()
 		MoveStruct()
 		BounceThingy()
-		LogWatch()
 	end
 end
-
-
-
