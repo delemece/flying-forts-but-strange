@@ -2,10 +2,9 @@ dofile("scripts/forts.lua")
 dofile(path .. "/magic.lua")
 dofile(path .. "/draw.lua")
 dofile(path .. "/thrusters.lua")
-
+data.Lock = {--[[contId, True/nil]]}
 data.Structures = {Nodes = {--[[deviceId, Nodes]]}, Affected = {--[[devIdcont, True/nil]]}, Forces = {--[[devIdcont, vec3]]}}
 data.FuelS = {Fuel = {--[[contId, {cap, fuel}]]}, ReFuel = {--[[devId, True/nil]]}, Tnk = {--[[dont touch]]}, iFuel = {--[[dont touch]]}}
-data.Lock = {--[[deviceId, Status]]}
 data.chasics = {}
 data.Thrusters = {}
 ControlPlace = Vec3(450, 400, 0)
@@ -13,6 +12,7 @@ ControlSize = Vec3(150, 150, 0)
 ControlRadius = 67
 DirectionSize = Vec3(60, 60, 0)
 chas_len = 400
+CurrentFrame = 0
 
 ContName = "infcontroller"
 
@@ -62,7 +62,7 @@ end
 function cont__(a, b , team, pos)
 	EnableWeapon("infcontroller", true, team)
 	CreateDevice(team, "infcontroller", a, b, pos)
-	EnableWeapon("infcontroller", false, team)
+	EnableWeapon("infcontroller", false, team) 
 end
 
 function OnDeviceDestroyed(teamId, deviceId, saveName, nodeA, nodeB, t)
@@ -115,31 +115,22 @@ end
 
 --Movement--
 
-function SetForce(x, y, deviceId, d)
-	local timeCoef = 0.1
-
-	if data.Lock[deviceId] then return
-	else data.Lock[deviceId] = true end
-
+function SetForce(x, y, deviceId)
+	local ID = CurrentFrame
+	local timeCoef = 0.2
+	if data.Lock[deviceId] == nil then data.Lock[deviceId] = CurrentFrame end
 	for t = 10, 100, 10 do
+		if data.Lock[deviceId] ~= ID then break end
 		if data.Structures.Forces[deviceId] == nil then break end
-		local check = ((t > 90) and (d == false))
 		local v = VecLIn(data.Structures.Forces[deviceId], Vec3(tonumber(x), tonumber(y) , 0), t / 100)
 		ScheduleCall(t * timeCoef / 100, _set_, deviceId, v, check)
 	end
-	if data.Lock[deviceId] then
-		ScheduleCall(timeCoef + 0.01, SET__, deviceId, nil)
-	end
-	Log(tostring(d) .. " " .. type(d))
-	return 
+	data.Lock[deviceId] = nil
+	return
 end
 
 function _set_(index,value,check)
 	data.Structures.Forces[index] = value
-	if check then kPressed = kPressed - 1 end
-end
-function SET__(index,value)
-	data.Lock[index] = value
 end
 
 function MoveStruct()
@@ -160,10 +151,11 @@ end
 --MainLoop--
 
 function Update(frame)
+	CurrentFrame = frame
 	if changeUi then
 		local mouse = GetMousePos()
-		if  VecLen(Vec3(mouse.x - ControlPlace.x, mouse.y - ControlPlace.y, 0)) < ControlRadius then 
-			SendScriptEvent("SetForce", tostring(mouse.x - ControlPlace.x) .. " , " .. tostring(mouse.y - ControlPlace.y) .. " , " .. tostring(CurrentStruct) .. " , " .. tostring(4), "", true)
+		if VecLen(Vec3(mouse.x - ControlPlace.x, mouse.y - ControlPlace.y, 0)) < ControlRadius then 
+			SendScriptEvent("SetForce", tostring(mouse.x - ControlPlace.x) .. " , " .. tostring(mouse.y - ControlPlace.y) .. " , " .. tostring(CurrentStruct), "", true)
 		end
 	end
 	if frame % 2 == 0 then

@@ -1,9 +1,8 @@
 changeUi = false
-Hmove = Vec3(0, 0, 0)
+Hmove = {["up"] = 0, ["right"] = 0, ["left"] = 0, ["down"] = 0}
 CurrentStruct = -1
 MovementKeys = {["up"] = Vec3(0, -1, 0), ["right"] = Vec3(1, 0, 0), ["left"] = Vec3(-1, 0, 0), ["down"] = Vec3(0, 1, 0)}
 exists = false
-kPressed = 0
 SavedForce = Vec3(0, 0, 0)
 function DrawChas()
 	for i, v in pairs(data.chasics) do
@@ -47,28 +46,22 @@ function DrawThrusters()
 end
 
 
-function HandyFunc(k, d)
-	if d then kPressed = kPressed + 1 end
-
-	if kPressed < 0 then kPressed = 0 end
-
-	if d then
-		Hmove = Vec3(Hmove.x + MovementKeys[k].x, Hmove.y + MovementKeys[k].y, 0)
-	elseif not d then 
-		Hmove = Vec3(Hmove.x - MovementKeys[k].x, Hmove.y - MovementKeys[k].y, 0)
-	end
-	if (Hmove.x == 0 and Hmove.y == 0) then 
-		SendScriptEvent("SetForce", tostring(SavedForce.x) .. " , " .. tostring(SavedForce.y) .. " , " .. tostring(CurrentStruct) .. " , " .. tostring(d), "", true)
-
-	elseif math.abs(Hmove.x) == 1 and math.abs(Hmove.y) == 1 then
-		SendScriptEvent("SetForce", tostring(Hmove.x * ControlRadius * 0.707) .. " , " .. tostring(Hmove.y * ControlRadius * 0.707) .. " , " .. tostring(CurrentStruct) .. " , " .. tostring(d), "", true)
+function HandyFunc(k, d) 
+	if d then Hmove[k] = 1 
+	else Hmove[k] = 0 end
+	local v = Vec3(Hmove["down"] - Hmove["up"], Hmove["right"] - Hmove["left"], 0)
+	if (math.abs(v.x) == 1 and math.abs(v.y) == 1) then
+		SendScriptEvent("SetForce", tostring(v.y * ControlRadius * 0.707) .. " , " .. tostring(v.x * ControlRadius * 0.707) .. " , " .. tostring(CurrentStruct), "", true)
+	elseif InArray(1, Hmove) then
+		SendScriptEvent("SetForce", tostring(v.y * ControlRadius) .. " , " .. tostring(v.x * ControlRadius) .. " , " .. tostring(CurrentStruct), "", true)
 	else
-		SendScriptEvent("SetForce", tostring(Hmove.x * ControlRadius) .. " , " .. tostring(Hmove.y * ControlRadius) .. " , " .. tostring(CurrentStruct) .. " , " .. tostring(d), "", true)
+		Log("HELLOOo")
+		SendScriptEvent("SetForce", tostring(SavedForce.x) .. " , " .. tostring(SavedForce.y) .. " , " .. tostring(CurrentStruct), "", true)
 	end
 end
 
 function OnKey(key, down)
-	if MovementKeys[key] ~= nil then
+	if MovementKeys[key] ~= nil and not changeUi then
 		HandyFunc(key, down)
 	end
 
@@ -76,10 +69,6 @@ function OnKey(key, down)
 
 		ShwUI = true
 		local location = ControlPlace
-
-		--[[if MovementKeys[key] ~= nil then
-		HandyFunc(key, down)
-		end]]
 
 		AddButtonControl("HUD", "BUTTON1", path .. "/sprites/" .. CONTTEXTNAME, ANCHOR_CENTER_CENTER, ControlSize, ControlPlace, "Normal")
 		CurrentStruct = GetLocalSelectedDeviceId() 
@@ -93,7 +82,8 @@ function OnKey(key, down)
 		if IsDesiredDevice(ContName, GetLocalSelectedDeviceId()) then
 			changeUi = true
 		end
-		if data.Structures.Forces[CurrentStruct] ~= nil and kPressed == 0 then
+
+		if data.Structures.Forces[CurrentStruct] ~= nil then
 			SavedForce = Vec3(data.Structures.Forces[CurrentStruct].x, data.Structures.Forces[CurrentStruct].y, 0)
 		end
 	elseif not (IsDesiredDevice(ContName, GetLocalSelectedDeviceId())) or key == "mouse right" then
@@ -104,25 +94,10 @@ function OnKey(key, down)
 	elseif key == "mouse left" and not down then
 		changeUi = false
 
-		if data.Structures.Forces[CurrentStruct] ~= nil and kPressed == 0 then
+		if data.Structures.Forces[CurrentStruct] ~= nil and not InArray(1, Hmove) then
 			SavedForce = Vec3(data.Structures.Forces[CurrentStruct].x, data.Structures.Forces[CurrentStruct].y, 0)
 		end
 	end
-	--[[if kPressed == 0 and MovementKeys[key] ~= nil and not down then
-	Hmove = Vec3(0, 0, 0)
-	local temp = data.Structures.Forces[CurrentStruct]
-	for i = 0.1, 1, 0.1 do 
-	local v = VecLIn(SavedForce, temp, i)
-	--SendScriptEvent("SetForce", tostring(SavedForce.x) .. " , " .. tostring(SavedForce.y) .. " , " .. tostring(CurrentStruct), "", true)
-	ScheduleCall(i,SetForce, v.x, v.y, CurrentStruct)
-	end
-	end]]
-
-	if kPressed == 0 and data.Lock[CurrentStruct] == false and MovmentKeys[key] ~= nil then
-		Hmove = Vec3(0, 0, 0)
-		SendScriptEvent("SetForce", tostring(SavedForce.x) .. " , " .. tostring(SavedForce.y) .. " , " .. tostring(CurrentStruct) .. " , " .. tostring(4), "", true)
-	end
-	--Log("Current direction: " .. tostring(Structures.Forces[CurrentStruct].x) .. " " .. tostring(Structures.Forces[CurrentStruct].y))
 	return 
 end
 
