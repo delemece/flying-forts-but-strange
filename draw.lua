@@ -108,7 +108,7 @@ function OnKey(key, down)
 	elseif key == "mouse left" and not down then
 		changeUi = false
 		
-		if data.Structures.Forces[CurrentStruct] ~= nil and kPressed == 0 then
+		if data.Structures.Forces[CurrentStruct] ~= nil and kPressed == 0 and data.Lock[CurrentStruct] == 0 then
 			SavedForce = Vec3(data.Structures.Forces[CurrentStruct].x, data.Structures.Forces[CurrentStruct].y, 0)
 		end
 	end
