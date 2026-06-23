@@ -58,7 +58,7 @@ function HandyFunc(k, d)
 		Hmove = Vec3(Hmove.x - MovementKeys[k].x, Hmove.y - MovementKeys[k].y, 0)
 	end
 	if (Hmove.x == 0 and Hmove.y == 0) then 
-		SendScriptEvent("SetForce", tostring(SavedForce.x) .. " , " .. tostring(SavedForce.y) .. " , " .. tostring(CurrentStruct) .. " , " .. tostring(d), "",)
+		SendScriptEvent("SetForce", tostring(SavedForce.x) .. " , " .. tostring(SavedForce.y) .. " , " .. tostring(CurrentStruct) .. " , " .. tostring(d), "", true)
 
 	elseif math.abs(Hmove.x) == 1 and math.abs(Hmove.y) == 1 then
 		SendScriptEvent("SetForce", tostring(Hmove.x * ControlRadius * 0.707) .. " , " .. tostring(Hmove.y * ControlRadius * 0.707) .. " , " .. tostring(CurrentStruct) .. " , " .. tostring(d), "", true)
@@ -127,7 +127,6 @@ function OnKey(key, down)
 end
 
 function OnUpdate(deltaTime)
-	Log("kjhfgdbg")
 	if CurrentStruct ~= nil and GetDeviceStructureId(CurrentStruct) ~= -1 and data.FuelS.iFuel ~= nil and data.FuelS.iFuel[GetDeviceStructureId(CurrentStruct)] ~= nil then
 		if data.Structures.Affected[CurrentStruct] and ((GetLocalTeamId() % 10) == GetDeviceTeamId(GetLocalSelectedDeviceId())) and not exists then
 			AddSpriteControl("", "Wbase",path .. "/sprites/Wbase", ANCHOR_TOP_RIGHT, Vec3(150, 150, 0), Vec3(1068, 300, 0), false)

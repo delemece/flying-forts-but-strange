@@ -60,7 +60,9 @@ function OnDeviceCompleted(teamId, deviceId, saveName)
 end
 
 function cont__(a, b , team, pos)
+	EnableWeapon("infcontroller", true, team)
 	CreateDevice(team, "infcontroller", a, b, pos)
+	EnableWeapon("infcontroller", false, team)
 end
 
 function OnDeviceDestroyed(teamId, deviceId, saveName, nodeA, nodeB, t)
