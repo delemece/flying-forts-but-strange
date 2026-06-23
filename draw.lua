@@ -55,7 +55,6 @@ function HandyFunc(k, d)
 	elseif InArray(1, Hmove) then
 		SendScriptEvent("SetForce", tostring(v.y * ControlRadius) .. " , " .. tostring(v.x * ControlRadius) .. " , " .. tostring(CurrentStruct), "", true)
 	else
-		Log("HELLOOo")
 		SendScriptEvent("SetForce", tostring(SavedForce.x) .. " , " .. tostring(SavedForce.y) .. " , " .. tostring(CurrentStruct), "", true)
 	end
 end
@@ -77,10 +76,11 @@ function OnKey(key, down)
 			location = Vec3(data.Structures.Forces[CurrentStruct].x, data.Structures.Forces[CurrentStruct].y, 0)
 		end
 		AddButtonControl("BUTTON1", "BUTTON2", path .. "/sprites/" .. FORCETEXTNAME, ANCHOR_CENTER_CENTER, DirectionSize, location, "Normal")
-
 	elseif key == "mouse left" and down then
 		if IsDesiredDevice(ContName, GetLocalSelectedDeviceId()) then
 			changeUi = true
+			LockControls(true)
+			EnableCameraControls(false)
 		end
 
 		if data.Structures.Forces[CurrentStruct] ~= nil then
@@ -93,12 +93,15 @@ function OnKey(key, down)
 
 	elseif key == "mouse left" and not down then
 		changeUi = false
-
 		if data.Structures.Forces[CurrentStruct] ~= nil and not InArray(1, Hmove) then
+		LockControls(false)
+		EnableCameraControls(true)
+		if data.Structures.Forces[CurrentStruct] ~= nil and kPressed == 0 then
 			SavedForce = Vec3(data.Structures.Forces[CurrentStruct].x, data.Structures.Forces[CurrentStruct].y, 0)
 		end
 	end
 	return 
+
 end
 
 function OnUpdate(deltaTime)
