@@ -130,7 +130,6 @@ function SetForce(x, y, deviceId, d)
 	if data.Lock[deviceId] then
 		ScheduleCall(timeCoef + 0.01, SET__, deviceId, nil)
 	end
-	Log(tostring(d) .. " " .. type(d))
 	return 
 end
 

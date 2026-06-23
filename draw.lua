@@ -88,10 +88,11 @@ function OnKey(key, down)
 			location = Vec3(data.Structures.Forces[CurrentStruct].x, data.Structures.Forces[CurrentStruct].y, 0)
 		end
 		AddButtonControl("BUTTON1", "BUTTON2", path .. "/sprites/" .. FORCETEXTNAME, ANCHOR_CENTER_CENTER, DirectionSize, location, "Normal")
-
 	elseif key == "mouse left" and down then
 		if IsDesiredDevice(ContName, GetLocalSelectedDeviceId()) then
 			changeUi = true
+			LockControls(true)
+			EnableCameraControls(false)
 		end
 		if data.Structures.Forces[CurrentStruct] ~= nil and kPressed == 0 then
 			SavedForce = Vec3(data.Structures.Forces[CurrentStruct].x, data.Structures.Forces[CurrentStruct].y, 0)
@@ -103,7 +104,8 @@ function OnKey(key, down)
 
 	elseif key == "mouse left" and not down then
 		changeUi = false
-
+		LockControls(false)
+		EnableCameraControls(true)
 		if data.Structures.Forces[CurrentStruct] ~= nil and kPressed == 0 then
 			SavedForce = Vec3(data.Structures.Forces[CurrentStruct].x, data.Structures.Forces[CurrentStruct].y, 0)
 		end
@@ -124,6 +126,7 @@ function OnKey(key, down)
 	end
 	--Log("Current direction: " .. tostring(Structures.Forces[CurrentStruct].x) .. " " .. tostring(Structures.Forces[CurrentStruct].y))
 	return 
+
 end
 
 function OnUpdate(deltaTime)

@@ -97,4 +97,3 @@ function GIVEMEANERROR()
 	local a = {}
 	return a[4] == 'a'
 end
-

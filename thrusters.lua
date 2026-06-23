@@ -110,7 +110,7 @@ end
 function fReFuel(devId)
 	for i, v in pairs(data.FuelS.ReFuel) do
 		if GetDeviceStructureId(i) == GetDeviceStructureId(devId) and GetDeviceStructureId(devId) ~= 0 then
-			return 6000 
+			return 10000 
 		end
 	end
 	return 0
