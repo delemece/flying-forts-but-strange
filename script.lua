@@ -118,6 +118,7 @@ end
 function SetForce(x, y, deviceId)
 	local ID = CurrentFrame
 	local timeCoef = 0.2
+	if deviceId == nil then return end
 	if data.Lock[deviceId] == nil then data.Lock[deviceId] = CurrentFrame end
 	for t = 10, 100, 10 do
 		if data.Lock[deviceId] ~= ID then break end

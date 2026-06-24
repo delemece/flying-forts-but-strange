@@ -92,8 +92,18 @@ end
 function VecLIn(from, to, t)
 	return Vec3(from.x + (to.x - from.x) * t, from.y + (to.y - from.y) * t, 0)
 end
-
+--[[
 function GIVEMEANERROR()
-	local a = {}
-	return a[4] == 'a'
+	local a.x = {}
+	return a.x[4] == 'a'
 end
+function ShowRayCast(VectorFrom, VectorTo, Colour, ShowHit)
+	local a = SpawnLine(VectorFrom, VectorTo, Colour, 10)
+	local v = GetRayHitPosition()
+	local b = -1
+	if ShowHit then
+		b = SpawnCircle(v, 10, Colour, 10)
+	end
+	return {a, b}
+end
+]]--

@@ -4,6 +4,8 @@ CurrentStruct = -1
 MovementKeys = {["up"] = Vec3(0, -1, 0), ["right"] = Vec3(1, 0, 0), ["left"] = Vec3(-1, 0, 0), ["down"] = Vec3(0, 1, 0)}
 exists = false
 SavedForce = Vec3(0, 0, 0)
+ShwUI = false
+
 function DrawChas()
 	for i, v in pairs(data.chasics) do
 		if v.hit ~= 1 and v.effectId ~= -1 then 
@@ -60,23 +62,26 @@ function HandyFunc(k, d)
 end
 
 function OnKey(key, down)
+
 	if MovementKeys[key] ~= nil and not changeUi then
 		HandyFunc(key, down)
 	end
+	if IsDesiredDevice(ContName, GetLocalSelectedDeviceId()) then
+		CurrentStruct = GetLocalSelectedDeviceId() 
+	end
 
-	if (IsDesiredDevice(ContName, GetLocalSelectedDeviceId())) and not (key == "mouse right") and not ShwUI and (GetTeamId(GetLocalTeamId()) == GetDeviceTeamIdActual(GetLocalSelectedDeviceId())) then
-
+	if (IsDesiredDevice(ContName, GetLocalSelectedDeviceId())) and not (key == "mouse right") and not ShwUI and (GetClientTeamId(GetLocalClientIndex())) == GetDeviceTeamIdActual(GetLocalSelectedDeviceId()) then
 		ShwUI = true
 		local location = ControlPlace
 
 		AddButtonControl("HUD", "BUTTON1", path .. "/sprites/" .. CONTTEXTNAME, ANCHOR_CENTER_CENTER, ControlSize, ControlPlace, "Normal")
-		CurrentStruct = GetLocalSelectedDeviceId() 
 
 		if data.Structures.Forces[CurrentStruct] ~= nil then
 			location = Vec3(data.Structures.Forces[CurrentStruct].x, data.Structures.Forces[CurrentStruct].y, 0)
 		end
 		AddButtonControl("BUTTON1", "BUTTON2", path .. "/sprites/" .. FORCETEXTNAME, ANCHOR_CENTER_CENTER, DirectionSize, location, "Normal")
 	elseif key == "mouse left" and down then
+
 		if IsDesiredDevice(ContName, GetLocalSelectedDeviceId()) then
 			changeUi = true
 			LockControls(true)
@@ -86,16 +91,19 @@ function OnKey(key, down)
 		if data.Structures.Forces[CurrentStruct] ~= nil then
 			SavedForce = Vec3(data.Structures.Forces[CurrentStruct].x, data.Structures.Forces[CurrentStruct].y, 0)
 		end
+
 	elseif not (IsDesiredDevice(ContName, GetLocalSelectedDeviceId())) or key == "mouse right" then
 		DeleteControl("HUD", "BUTTON1") 
 		ShwUI = false
 		changeUi = false
+		LockControls(false)
+		EnableCameraControls(true)
 
 	elseif key == "mouse left" and not down then
 		changeUi = false
+		LockControls(false)
+		EnableCameraControls(true)
 		if data.Structures.Forces[CurrentStruct] ~= nil and not InArray(1, Hmove) then
-			LockControls(false)
-			EnableCameraControls(true)
 			SavedForce = Vec3(data.Structures.Forces[CurrentStruct].x, data.Structures.Forces[CurrentStruct].y, 0)
 		end
 	end
@@ -125,4 +133,3 @@ function OnUpdate(deltaTime)
 		SetControlAbsolutePos("BUTTON1", "BUTTON2", Vec3(ControlPlace.x + data.Structures.Forces[CurrentStruct].x, ControlPlace.y + data.Structures.Forces[CurrentStruct].y))
 	end
 end
-
