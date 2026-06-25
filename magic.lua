@@ -63,6 +63,7 @@ end
 function RotateVec(v, angle)
 	return Vec3(v.x * math.cos(ang) - v.y * math.sin(angle), v.x * math.sin(ang) - v.y * math.cos(angle), 0)
 end
+--[[ For better days
 function LogWatch()
 	for T, G in pairs(watchlist) do
 		if type(T) == type({}) then 
@@ -78,7 +79,6 @@ function LogWatch()
 		else Log(tostring(T)) end
 	end
 end
---[[
 function Watch(T, index)
 	if index == -1 then
 		local count = #watchlist
@@ -92,11 +92,12 @@ end
 function VecLIn(from, to, t)
 	return Vec3(from.x + (to.x - from.x) * t, from.y + (to.y - from.y) * t, 0)
 end
---[[
+
 function GIVEMEANERROR()
-	local a.x = {}
-	return a.x[4] == 'a'
+	local a = {}
+	return a.x[4]
 end
+
 function ShowRayCast(VectorFrom, VectorTo, Colour, ShowHit)
 	local a = SpawnLine(VectorFrom, VectorTo, Colour, 10)
 	local v = GetRayHitPosition()
@@ -106,4 +107,3 @@ function ShowRayCast(VectorFrom, VectorTo, Colour, ShowHit)
 	end
 	return {a, b}
 end
-]]--

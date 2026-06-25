@@ -2,11 +2,13 @@ dofile("scripts/forts.lua")
 dofile(path .. "/magic.lua")
 dofile(path .. "/draw.lua")
 dofile(path .. "/thrusters.lua")
+
 data.Lock = {--[[contId, True/nil]]}
 data.Structures = {Nodes = {--[[deviceId, Nodes]]}, Affected = {--[[devIdcont, True/nil]]}, Forces = {--[[devIdcont, vec3]]}}
 data.FuelS = {Fuel = {--[[contId, {cap, fuel}]]}, ReFuel = {--[[devId, True/nil]]}, Tnk = {--[[dont touch]]}, iFuel = {--[[dont touch]]}}
 data.chasics = {}
 data.Thrusters = {}
+
 ControlPlace = Vec3(450, 400, 0)
 ControlSize = Vec3(150, 150, 0)
 ControlRadius = 67
@@ -54,13 +56,13 @@ function OnDeviceCompleted(teamId, deviceId, saveName)
 		local b = GetDevicePlatformB(deviceId)
 		local team = GetDeviceTeamId(deviceId)
 		local pos = GetDeviceLinkPosition(deviceId)
-		ScheduleCall(0.15,cont__, a, b , team , pos)
-		ApplyDamageToDevice(deviceId, 1000) -- тут потом сделать чтобы оно именно удаляло
+		ScheduleCall(0.1, cont__, a, b , team , pos)
+		DeleteDeviceById(deviceId)
 	end
 end
 
 function cont__(a, b , team, pos)
-	EnableWeapon("infcontroller", true, team)
+	EnableWeapon("infcontroller", true, team) 
 	CreateDevice(team, "infcontroller", a, b, pos)
 	EnableWeapon("infcontroller", false, team) 
 end
@@ -124,7 +126,11 @@ function SetForce(x, y, deviceId)
 		if data.Lock[deviceId] ~= ID then break end
 		if data.Structures.Forces[deviceId] == nil then break end
 		local v = VecLIn(data.Structures.Forces[deviceId], Vec3(tonumber(x), tonumber(y) , 0), t / 100)
-		ScheduleCall(t * timeCoef / 100, _set_, deviceId, v, check)
+		for contId, force in pairs(data.Structures.Forces) do
+			if GetDeviceStructureId(contId) == GetDeviceStructureId(deviceId) then
+				ScheduleCall(t * timeCoef / 100, _set_, contId, v, check)
+			end
+		end
 	end
 	data.Lock[deviceId] = nil
 	return

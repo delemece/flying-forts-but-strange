@@ -62,15 +62,16 @@ function HandyFunc(k, d)
 end
 
 function OnKey(key, down)
-
 	if MovementKeys[key] ~= nil and not changeUi then
 		HandyFunc(key, down)
+		return
 	end
+
 	if IsDesiredDevice(ContName, GetLocalSelectedDeviceId()) then
 		CurrentStruct = GetLocalSelectedDeviceId() 
 	end
 
-	if (IsDesiredDevice(ContName, GetLocalSelectedDeviceId())) and not (key == "mouse right") and not ShwUI and (GetClientTeamId(GetLocalClientIndex())) == GetDeviceTeamIdActual(GetLocalSelectedDeviceId()) then
+	if (IsDesiredDevice(ContName, GetLocalSelectedDeviceId())) and not (key == "mouse right") and not ShwUI and (GetClientTeamId(GetLocalClientIndex()) == GetDeviceTeamIdActual(GetLocalSelectedDeviceId())) then
 		ShwUI = true
 		local location = ControlPlace
 
@@ -87,8 +88,7 @@ function OnKey(key, down)
 			LockControls(true)
 			EnableCameraControls(false)
 		end
-
-		if data.Structures.Forces[CurrentStruct] ~= nil then
+		if data.Structures.Forces[CurrentStruct] ~= nil and not InArray(1, Hmove) then
 			SavedForce = Vec3(data.Structures.Forces[CurrentStruct].x, data.Structures.Forces[CurrentStruct].y, 0)
 		end
 
