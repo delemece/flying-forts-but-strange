@@ -25,4 +25,8 @@ Merge(Device,
 	chasics1 = L"Chassis",
 	chasics1Tip2 = L"holds your flying fort without having to directly connect to the ground",
 	chasics1Tip3 = L"\"we have hover forts at home\"",
+	
+	controller = L"Helm",
+	controllerTip2 = L"Use this to control your Thrusters",
+	controllerTip3 = L"Also you can move with arrowkeys (MIGHT BE UNSTABLE USE AT YOU OWN RISK)",
 })

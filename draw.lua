@@ -85,7 +85,7 @@ function OnKey(key, down)
 
 		if IsDesiredDevice(ContName, GetLocalSelectedDeviceId()) then
 			changeUi = true
-			LockControls(true)
+			--LockControls(true)
 			EnableCameraControls(false)
 		end
 		if data.Structures.Forces[CurrentStruct] ~= nil and not InArray(1, Hmove) then
@@ -96,12 +96,12 @@ function OnKey(key, down)
 		DeleteControl("HUD", "BUTTON1") 
 		ShwUI = false
 		changeUi = false
-		LockControls(false)
+		--LockControls(false)
 		EnableCameraControls(true)
 
 	elseif key == "mouse left" and not down then
 		changeUi = false
-		LockControls(false)
+		--LockControls(false)
 		EnableCameraControls(true)
 		if data.Structures.Forces[CurrentStruct] ~= nil and not InArray(1, Hmove) then
 			SavedForce = Vec3(data.Structures.Forces[CurrentStruct].x, data.Structures.Forces[CurrentStruct].y, 0)

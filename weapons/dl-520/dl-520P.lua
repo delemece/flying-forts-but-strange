@@ -32,15 +32,15 @@ DestroyEffect = "effects/cannon_explode.lua"
 DestroyUnderwaterEffect = "mods/dlc2/effects/device_explode_submerged_large.lua"
 ShellEffect = "effects/shell_eject_cannon.lua"
 ReloadEffectOffset = 0
-RetriggerFireEffect = false
-Projectile = "dl500P"
+RetriggerFireEffect = true
+Projectile = "dl520P"
 BarrelLength = 100.0 
 MinFireClearance = 500
 FireClearanceOffsetInner = 20
 FireClearanceOffsetOuter = 40
 ReloadTime = 30
-MinFireSpeed = 10000.0
-MaxFireSpeed = 10000.1
+MinFireSpeed = 14000.0
+MaxFireSpeed = 14000.1
 MinFireRadius = 300.0
 MaxFireRadius = 1500.0
 
@@ -59,7 +59,7 @@ EnergyFireCost = 6000.0
 MetalFireCost = 20
 ShowFireAngle = true
 RoundsEachBurst = 1
-RoundPeriod = 0.2
+RoundPeriod = 0.3
 --UniformSpray = true
 ReloadFramePeriod = (ReloadTime + RoundsEachBurst*RoundPeriod)/12
 DoorCloseDelay = 1
@@ -72,9 +72,18 @@ BarrelRecoilSpeed = -2
 BarrelReturnForce = 0.5
 
 TriggerProjectileAgeAction = true
-MinAgeTrigger = 0.5
-MaxAgeTrigger = 3.1
+MinAgeTrigger = 0.4
+MaxAgeTrigger = 2.8
 
+--[[ReloadBank =
+{
+	Max = 2,
+	ReloadTime = 1,
+	BaseMult = 0.6,
+	IndexMult = 0.4,
+	EnergyMult = 0.8,
+	MetalMult = 0.8,
+}]]
 
 TargetIcon =
 {

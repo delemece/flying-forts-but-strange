@@ -8,13 +8,17 @@ Merge(Weapon,
 	dl_520Tip2 = L"Long range cannon, that can shoot from covered spots",
 	dl_520Tip3 = L"Upgrade to change ammo type",
 	
+	dl_520P = L"DL-520",
+	dl_520PTip2 = L"Flak variation",
+	dl_520PTip3 = L"Upgrade to change ammo type back",
+	
 	dl_150 = L"DL-150",
 	dl_150Tip2 = L"Special cannon that can shoot enemies above",
-	dl_150Tip3 = L"Has a 3 shot drum",
+	dl_150Tip3 = L"hold to shoot properly",
 	
 	dl_150F = L"DL-150F",
 	dl_150FTip2 = L"Flipped version of DL-150 for shooting enemies below",
-	dl_150Tip3 = L"Also has a 3 shot drum",
+	dl_150FTip3 = L"hold to shoot properly",
 })
 
 

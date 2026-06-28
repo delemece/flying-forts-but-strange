@@ -33,14 +33,14 @@ DestroyUnderwaterEffect = "mods/dlc2/effects/device_explode_submerged_large.lua"
 ShellEffect = "effects/shell_eject_cannon.lua"
 ReloadEffectOffset = 0
 RetriggerFireEffect = false
-Projectile = "dl500"
+Projectile = "dl520"
 BarrelLength = 100.0 
 MinFireClearance = 500
 FireClearanceOffsetInner = 20
 FireClearanceOffsetOuter = 40
-ReloadTime = 28
-MinFireSpeed = 12000.0
-MaxFireSpeed = 12000.1
+ReloadTime = 30
+MinFireSpeed = 18000.0
+MaxFireSpeed = 18000.1
 MinFireRadius = 600.0
 MaxFireRadius = 1200.0
 MinFireAngle = -30
@@ -66,7 +66,15 @@ BarrelRecoilLimit = -0.2
 BarrelRecoilSpeed = -2
 BarrelReturnForce = 0.5
 
-
+--[[ReloadBank =
+{
+	Max = 2,
+	ReloadTime = 2,
+	BaseMult = 0.6,
+	IndexMult = 0.4,
+	EnergyMult = 0.8,
+	MetalMult = 0.8,
+}]]
 
 
 TargetIcon =

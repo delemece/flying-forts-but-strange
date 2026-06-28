@@ -13,14 +13,14 @@ table.insert(Projectiles,
 		ProjectileThickness = 3.0,
 		ProjectileShootDownRadius = 60,
 		Impact = 20000,
-		DisableShields = false,
+		DisableShields = true,
 		BeamTileRate = 0.02,
 		BeamScrollRate = 0.0,
-		ProjectileDamage = 70.0,
-		PenetrationDamage = 350,
+		ProjectileDamage = 100.0,
+		PenetrationDamage = 300,
 		WeaponDamageBonus = 3,
 		
-		ProjectileSplashDamage = 7,
+		ProjectileSplashDamage = 10,
 		ProjectileSplashDamageMaxRadius = 20.0,
 		
 		SpeedIndicatorFactor = 9,
@@ -63,21 +63,21 @@ table.insert(Projectiles,
 		ProjectileType = "mortar",
 		ProjectileSprite = "weapons/media/bullet",
 		DrawBlurredProjectile = true,
-		ProjectileMass = 20.0,
-		ProjectileDrag = 0,
+		ProjectileMass = 10,
+		ProjectileDrag = 2,
 		ProjectileIncendiary = false,
 		DeflectedByShields = false,
 		ExplodeOnTouch = false,
 		ProjectileThickness = 6.0,
 		ProjectileShootDownRadius = 60,
-		Impact = 100000,
+		Impact = 10000,
 		DisableShields = false,
 		BeamTileRate = 0.02,
 		BeamScrollRate = 0.0,
-		ProjectileDamage = 320.0,
-		ProjectileSplashDamage = 20,
+		ProjectileDamage = 100.0,
+		ProjectileSplashDamage = 10,
 		ProjectileSplashDamageMaxRadius = 200.0,
-		SpeedIndicatorFactor = 0.05,
+		SpeedIndicatorFactor = 0.1,
 		TrailEffect = "effects/cannon_trail.lua",
 
 		MinAge = 5,
@@ -112,13 +112,13 @@ table.insert(Projectiles,
 
 table.insert(Projectiles,
 {
-		SaveName = "dl500",
+		SaveName = "dl520",
 
 		ProjectileType = "mortar",
 		ProjectileSprite = "weapons/media/bullet",
 		DrawBlurredProjectile = true,
-		ProjectileMass = 80.0,
-		ProjectileDrag = 0,
+		ProjectileMass = 10.0,
+		ProjectileDrag = 4,
 		ProjectileIncendiary = false,
 		DeflectedByShields = false,
 		ExplodeOnTouch = false,
@@ -127,7 +127,7 @@ table.insert(Projectiles,
 		Impact = 200000,
 		BeamTileRate = 0.02,
 		BeamScrollRate = 0.0,
-		ProjectileDamage = 850.0,
+		ProjectileDamage = 800.0,
 		PenetrationDamage = 500,
 		ProjectileSplashDamage = 20,
 		ProjectileSplashDamageMaxRadius = 100.0,
@@ -135,7 +135,9 @@ table.insert(Projectiles,
 		DestroyShields = true,
 		MinAge = 4,
 		MaxAge = 5,
-
+		
+		SpeedIndicatorFactor = 500.0,
+		
 		TrailEffect = "effects/cannon_trail.lua",
 
 	Effects =
@@ -168,17 +170,17 @@ table.insert(Projectiles,
 		},
 })
 
-PDetonation = { Effect = path .."/effects/pdet.lua", Projectile = { Count = 30, Type = "shrap", Speed = 15000, StdDev = 1.1, AngleOffset = 0.01 }, Offset = 0, Terminate = true, }
+PDetonation = { Effect = path .."/effects/pdet.lua", Projectile = { Count = 25, Type = "shrap", Speed = 15000, StdDev = 1.1, AngleOffset = 0.01 }, Offset = 0, Terminate = true, }
 
 table.insert(Projectiles,
 {
-	SaveName = "dl500P",
+	SaveName = "dl520P",
 
 	ProjectileType = "mortar",
 	ProjectileSprite = path .. "/weapons/dl-520/bullet",
 	ProjectileSpriteMipMap = false,
 	DrawBlurredProjectile = true,
-	ProjectileMass = 80.0,
+	ProjectileMass = 10.0,
 	ProjectileDrag = 0,
 	DeflectedByShields = false,
 	ExplodeOnTouch = true,
@@ -194,8 +196,8 @@ table.insert(Projectiles,
 	BeamTileRate = 0.02,
 	BeamScrollRate = 0.0,
 	
-	MinAge = 5,
-	MaxAge = 4,
+	MinAge = 3,
+	MaxAge = 3.5,
 	
 	TrailEffect = path .. "/effects/bluetrail.lua",
 
@@ -396,4 +398,4 @@ table.insert(Projectiles,
 
 MakeFlamingVersion("dl150",		1.25,	 0.5, flamingTrail, nil, smallArmsFlare)
 MakeFlamingVersion("shrap",		1.25,	 0.1, flamingTrail, nil, smallArmsFlare)
-MakeFlamingVersion("dl500",		0.63,	1.1, flamingTrail, nil, genericFlamingExpire)
+MakeFlamingVersion("dl520",		0.63,	1.1, flamingTrail, nil, genericFlamingExpire)

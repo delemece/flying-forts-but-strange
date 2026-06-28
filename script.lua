@@ -21,6 +21,7 @@ ContName = "infcontroller"
 TnkType = {
 ["tank_S"] = 400000,
 ["Tank_B"] = 2000000,
+["Tank_H"] = 7000000,
 }
 
 chas = "chasics1"
@@ -51,7 +52,7 @@ function OnDeviceCompleted(teamId, deviceId, saveName)
 	elseif saveName == chas then
 		data.chasics[deviceId] = {GetDevicePlatformA(deviceId), GetDevicePlatformB(deviceId),
 		effectId = -1, hitpos = -1, hitpos2 = -1, hit = -1, groudAngle = -1}
-	elseif saveName == "controller" then
+	elseif saveName == "dcontroller" then
 		local a = GetDevicePlatformA(deviceId)
 		local b = GetDevicePlatformB(deviceId)
 		local team = GetDeviceTeamId(deviceId)
